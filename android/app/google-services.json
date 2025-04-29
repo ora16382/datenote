@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "639186366647",
+    "project_id": "datenote-29253",
+    "storage_bucket": "datenote-29253.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639186366647:android:145d4e171ac07e8a4b1d32",
+        "android_client_info": {
+          "package_name": "jh.project.datenote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "639186366647-jp5t8cnmq4o862967g17e3jkv45so1sd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsNYyz2pC-uHavF67WiEzlNNhantzx6IM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639186366647-jp5t8cnmq4o862967g17e3jkv45so1sd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "639186366647-59gn7rjlt796prki3vs4e5duv3b5utoo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "jh.project.datenote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
