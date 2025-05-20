@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datenote/models/address/address_model.dart';
 import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
+import 'package:datenote/util/const/fire_store_collection_name.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:datenote/util/widget/dialog.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -13,6 +14,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class AddressManageController extends GetxController {
+  /// 주소 불러오기로 진입했는지 여부
+  final isLoadAddress = Get.parameters['isLoadAddress'] == 'true';
+
   static const int pageSize = 10;
 
   final userCtrl = Get.find<UserController>();
@@ -53,9 +57,9 @@ class AddressManageController extends GetxController {
 
     /// 추가된 데이터 실시간 업데이트
     _subscription = FirebaseFirestore.instance
-        .collection('address')
+        .collection(FireStoreCollectionName.address)
         .doc(userCtrl.currentUser.uid)
-        .collection('addresses')
+        .collection(FireStoreCollectionName.addresses)
         .orderBy('orderDate', descending: true)
         .snapshots()
         .listen((snapshot) {
@@ -94,7 +98,8 @@ class AddressManageController extends GetxController {
 
               if (data != null) {
                 outerLoop:
-                for (final List<AddressModel> page in pagingController.pages ?? []) {
+                for (final List<AddressModel> page
+                    in pagingController.pages ?? []) {
                   for (var addressModel in page.indexed) {
                     if (addressModel.$2.id == documentChange.doc.id) {
                       page[addressModel.$1] = AddressModel.fromJson(data);
@@ -175,9 +180,9 @@ class AddressManageController extends GetxController {
   ///
   Future<List<AddressModel>> _fetchPage(int pageKey) async {
     Query query = FirebaseFirestore.instance
-        .collection('address')
+        .collection(FireStoreCollectionName.address)
         .doc(userCtrl.currentUser.uid)
-        .collection('addresses')
+        .collection(FireStoreCollectionName.addresses)
         .orderBy('orderDate', descending: true)
         .limit(pageSize);
 
@@ -223,7 +228,7 @@ class AddressManageController extends GetxController {
   /// @comment 수정 버튼 클릭 콜백
   ///
   Future<void> onTapEditBtn(AddressModel addressModel) async {
-    await Get.toNamed(
+    Get.toNamed(
       Routes.addressSearch,
       parameters: {'isModify': 'true'},
       arguments: addressModel,
@@ -253,9 +258,9 @@ class AddressManageController extends GetxController {
       update([':loading']);
 
       await FirebaseFirestore.instance
-          .collection('address')
+          .collection(FireStoreCollectionName.address)
           .doc(userCtrl.currentUser.uid)
-          .collection('addresses')
+          .collection(FireStoreCollectionName.addresses)
           .doc(addressModel.id)
           .delete();
     } catch (e) {
@@ -263,6 +268,18 @@ class AddressManageController extends GetxController {
     } finally {
       isLoadingProgress = false;
       update([':loading']);
+    }
+  }
+
+  /// @author 정준형
+  /// @since 2025. 4. 30.
+  /// @comment 주소록 클릭 콜백
+  ///
+  void onTapAddress(AddressModel addressModel) {
+    if(isLoadAddress) {
+      Get.back(result: addressModel);
+    } else {
+      /// 동작 없음
     }
   }
 }

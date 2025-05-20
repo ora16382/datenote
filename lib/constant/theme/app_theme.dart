@@ -51,7 +51,7 @@ ThemeData themeData = ThemeData(
     iconTheme: IconThemeData(color: AppColors.onBackground),
   ),
 
-  // 🔘 ElevatedButton 스타일
+  /// 🔘 ElevatedButton 스타일
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: AppColors.primary,

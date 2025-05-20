@@ -5,6 +5,7 @@ import 'package:datenote/constant/enum/date_style.dart';
 import 'package:datenote/constant/enum/gender.dart';
 import 'package:datenote/constant/enum/region.dart';
 import 'package:datenote/modules/user/user_controller.dart';
+import 'package:datenote/util/const/fire_store_collection_name.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:datenote/util/widget/dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -68,7 +69,7 @@ class CollectingInformationController extends GetxController {
       if (uid == null) return;
 
       try {
-        await FirebaseFirestore.instance.collection('users').doc(uid).update({
+        await FirebaseFirestore.instance.collection(FireStoreCollectionName.users).doc(uid).update({
           'gender' : gender.value?.name,
           'ageGroup': ageGroup.value?.name,
           'dateStyle' : dateStyleList.map((dateStyle) => dateStyle.name).toList(),

@@ -1,6 +1,5 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:datenote/modules/community/community_view.dart';
-import 'package:datenote/modules/event/event_view.dart';
 import 'package:datenote/modules/main/main_view.dart';
 import 'package:datenote/modules/user/my_info/my_info_view.dart';
 import 'package:flutter/material.dart';
@@ -28,21 +27,12 @@ class HomeView extends StatelessWidget {
           statusBarColor: Colors.transparent,
         ),
         scrolledUnderElevation: 0,
-
-        title: GestureDetector(
-          child: const Text('DateNote'),
-          onTap: () {
-            // controller.seedDummyFeeds();
-            // logger.i(Get.find<UserController>().currentUser);
-          },
-        ),
+        toolbarHeight: 0,
       ),
       body: Obx(() {
         switch (controller.homeType.value) {
           case HomeType.main:
             return MainView();
-          case HomeType.event:
-            return EventView();
           case HomeType.community:
             return CommunityView();
           default:
@@ -57,8 +47,7 @@ class HomeView extends StatelessWidget {
           activeColor: AppColors.primary,
           color: Colors.grey,
           items: const [
-            TabItem(icon: Icons.calendar_today_rounded, title: '메인'),
-            TabItem(icon: Icons.card_giftcard_rounded, title: '이벤트'),
+            TabItem(icon: Icons.favorite_border_rounded, title: '메인'),
             TabItem(icon: Icons.people_outline_rounded, title: '커뮤니티'),
             TabItem(icon: Icons.person_rounded, title: '내 정보'),
           ],
@@ -66,28 +55,32 @@ class HomeView extends StatelessWidget {
           onTap: controller.onTapBottomNavi,
         );
       }),
-      floatingActionButton: SpeedDial(
-        activeIcon: Icons.close_rounded,
-        icon: Icons.add_rounded,
-        spacing: 12,
-        backgroundColor: AppColors.primary,
-        overlayColor: Colors.black,
-        overlayOpacity: 0.3,
-        children: [
-          SpeedDialChild(
-            child: const Icon(Icons.edit_note_rounded),
-            label: '데이트 기록 작성',
-            onTap: controller.onTapDateHistoryWriteBtn,
-          ),
-          SpeedDialChild(
-            child: const Icon(Icons.favorite_rounded),
-            label: '데이트 플랜 추천',
-            onTap: controller.onTapDatePlanRecommendBtn,
-          ),
-
-
-        ],
-      ),
+      floatingActionButton: Obx(() {
+        if (controller.homeType.value != HomeType.main) {
+          return const SizedBox();
+        } else {
+          return SpeedDial(
+            activeIcon: Icons.close_rounded,
+            icon: Icons.add_rounded,
+            spacing: 12,
+            backgroundColor: AppColors.primary,
+            overlayColor: Colors.black,
+            overlayOpacity: 0.3,
+            children: [
+              SpeedDialChild(
+                child: const Icon(Icons.edit_note_rounded, color: AppColors.primary,),
+                label: '데이트 기록 작성',
+                onTap: controller.onTapDateHistoryWriteBtn,
+              ),
+              SpeedDialChild(
+                child: const Icon(Icons.favorite_rounded, color: AppColors.primary,),
+                label: '데이트 플랜 추천',
+                onTap: controller.onTapDatePlanRecommendBtn,
+              ),
+            ],
+          );
+        }
+      }),
     );
   }
 }

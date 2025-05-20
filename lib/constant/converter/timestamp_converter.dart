@@ -24,6 +24,8 @@ class TimestampConverterNotNull implements JsonConverter<DateTime, dynamic> {
   DateTime fromJson(dynamic json) {
     if (json is Timestamp) {
       return json.toDate();
+    } else if (json is DateTime) {
+      return json;
     } else {
       return DateTime.parse(json);
     }

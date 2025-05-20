@@ -1,5 +1,9 @@
 
 import 'package:datenote/modules/home/home_view.dart';
+import 'package:datenote/modules/main/recommendPlan/detail/recommend_plan_detail_view.dart';
+import 'package:datenote/modules/main/recommendPlan/edit/recommend_plan_edit_view.dart';
+import 'package:datenote/modules/main/recommendPlan/place/search/place_search_view.dart';
+import 'package:datenote/modules/main/recommendPlan/recommend_plan_view.dart';
 import 'package:datenote/modules/splash/splash_view.dart';
 import 'package:datenote/modules/user/address/daum_post_web/daum_post_web_view.dart';
 import 'package:datenote/modules/user/address/manage/address_manage_view.dart';
@@ -29,9 +33,15 @@ class AppPages {
     GetPage(name: Routes.addressSearch, page: () => const AddressSearchView()),
     GetPage(name: Routes.daumPostWeb, page: () => const DaumPostWebView()),
 
+    /// 메인
     GetPage(name: Routes.home, page: () => HomeView()),
 
-    // GetPage(name: Routes.feedDetail, page: () => const FeedDetailView()),
-    // GetPage(name: Routes.youtubePlayer, page: () => const YoutubePlayerView()),
+    /// 데이트 플랜
+    GetPage(name: Routes.recommendPlan, page: () => const RecommendPlanView()),
+    GetPage(name: Routes.recommendPlanDetail, page: () => const RecommendPlanDetailView()),
+    GetPage(name: Routes.recommendPlanEdit, page: () => const RecommendPlanEditView()),
+
+    /// 데이트 플랜 - 플레이스
+    GetPage(name: Routes.placeSearch, page: () => const PlaceSearchView()),
   ];
 }

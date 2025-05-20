@@ -17,8 +17,7 @@ class AddressManageView extends StatefulWidget {
   State<AddressManageView> createState() => _AddressManageViewState();
 }
 
-class _AddressManageViewState extends State<AddressManageView>
-    with SingleTickerProviderStateMixin {
+class _AddressManageViewState extends State<AddressManageView> with SingleTickerProviderStateMixin {
   final controller = Get.put(AddressManageController());
 
   @override
@@ -31,11 +30,7 @@ class _AddressManageViewState extends State<AddressManageView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarBrightness: Brightness.light,
-          statusBarIconBrightness: Brightness.dark,
-          statusBarColor: Colors.transparent,
-        ),
+        systemOverlayStyle: const SystemUiOverlayStyle(statusBarBrightness: Brightness.light, statusBarIconBrightness: Brightness.dark, statusBarColor: Colors.transparent),
         centerTitle: true,
         title: GestureDetector(
           child: Text('주소 관리', style: Get.textTheme.titleSmall),
@@ -65,9 +60,7 @@ class _AddressManageViewState extends State<AddressManageView>
                       child: PagedListView<int, AddressModel>(
                         state: state,
                         fetchNextPage: fetchNextPage,
-                        builderDelegate: PagedChildBuilderDelegate<
-                          AddressModel
-                        >(
+                        builderDelegate: PagedChildBuilderDelegate<AddressModel>(
                           itemBuilder: (context, addressModel, index) {
                             // Slidable(
                             //     controller:
@@ -103,175 +96,80 @@ class _AddressManageViewState extends State<AddressManageView>
                             //         ),
                             //       ],
                             //     ),
-                            return Card(
-                              elevation: 4,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    /// 주소 이름
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                        bottom: 8.0,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            addressModel.addressName,
-                                            style:
-                                                Get.textTheme.headlineMedium,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    /// 기본 주소
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                        bottom: 4.0,
-                                      ),
-                                      child: Text(
-                                        addressModel.address,
-                                        style: Get.textTheme.bodyMedium,
-                                      ),
-                                    ),
-
-                                    /// 상세 주소 (있을 경우만 표시)
-                                    if (addressModel.detailAddress.isNotEmpty)
-                                      Text(
-                                        addressModel.detailAddress,
-                                        style: Get.textTheme.bodyMedium,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
+                            return GestureDetector(
+                              onTap: () {
+                                controller.onTapAddress(addressModel);
+                              },
+                              child: Card(
+                                elevation: 4,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      /// 주소 이름
+                                      Container(
+                                        margin: const EdgeInsets.only(bottom: 8.0),
+                                        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [Text(addressModel.addressName, style: Get.textTheme.headlineMedium)]),
                                       ),
 
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                        top: 12.0,
+                                      /// 기본 주소
+                                      Container(margin: const EdgeInsets.only(bottom: 4.0), child: Text(addressModel.address, style: Get.textTheme.bodyMedium)),
+
+                                      /// 상세 주소 (있을 경우만 표시)
+                                      if (addressModel.detailAddress.isNotEmpty) Text(addressModel.detailAddress, style: Get.textTheme.bodyMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
+
+                                      Container(
+                                        margin: const EdgeInsets.only(top: 12.0),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text('생성일 : ${DateFormat('yyyy.MM.dd').format(addressModel.createdAt)}', style: Get.textTheme.bodySmall?.copyWith(color: AppColors.grey)),
+                                            Row(
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    controller.onTapEditBtn(addressModel);
+                                                  },
+                                                  child: Text('수정', style: Get.textTheme.bodySmall?.copyWith(color: AppColors.grey)),
+                                                ),
+                                                Container(margin: const EdgeInsets.symmetric(horizontal: 4.0), child: Text('|', style: Get.textTheme.bodySmall?.copyWith(color: AppColors.grey))),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    controller.onTapDeleteBtn(addressModel);
+                                                  },
+                                                  child: Text('삭제', style: Get.textTheme.bodySmall?.copyWith(color: AppColors.grey)),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            '생성일 : ${DateFormat('yyyy.MM.dd').format(addressModel.createdAt)}',
-                                            style: Get.textTheme.bodySmall
-                                                ?.copyWith(
-                                                  color: AppColors.grey,
-                                                ),
-                                          ),
-                                          Row(
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  controller.onTapEditBtn(
-                                                    addressModel,
-                                                  );
-                                                },
-                                                child: Text(
-                                                  '수정',
-                                                  style: Get
-                                                      .textTheme
-                                                      .bodySmall
-                                                      ?.copyWith(
-                                                        color: AppColors.grey,
-                                                      ),
-                                                ),
-                                              ),
-                                              Container(
-                                                margin:
-                                                    const EdgeInsets.symmetric(
-                                                      horizontal: 4.0,
-                                                    ),
-                                                child: Text(
-                                                  '|',
-                                                  style: Get
-                                                      .textTheme
-                                                      .bodySmall
-                                                      ?.copyWith(
-                                                        color: AppColors.grey,
-                                                      ),
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  controller.onTapDeleteBtn(
-                                                    addressModel,
-                                                  );
-                                                },
-                                                child: Text(
-                                                  '삭제',
-                                                  style: Get
-                                                      .textTheme
-                                                      .bodySmall
-                                                      ?.copyWith(
-                                                        color: AppColors.grey,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
                           },
                           newPageErrorIndicatorBuilder: (context) {
-                            return Text(
-                              '오류가 발생하였습니다. 잠시 후 다시 시도해주세요.',
-                              style: Get.textTheme.bodyMedium,
-                            );
+                            return Text('오류가 발생하였습니다. 잠시 후 다시 시도해주세요.', style: Get.textTheme.bodyMedium);
                           },
                           noItemsFoundIndicatorBuilder: (context) {
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/images/address/no_data_address_image.png',
-                                  width: 200,
-                                  height: 200,
-                                ),
-                              ],
-                            );
+                            return Column(mainAxisAlignment: MainAxisAlignment.center, children: [Image.asset('assets/images/address/no_data_address_image.png', width: 200, height: 200)]);
                           },
                           firstPageErrorIndicatorBuilder: (context) {
                             return Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Container(
-                                  margin: const EdgeInsets.only(bottom: 16),
-                                  child: Image.asset(
-                                    'assets/images/address/error_address_image.png',
-                                    width: 200,
-                                    height: 200,
-                                  ),
-                                ),
+                                Container(margin: const EdgeInsets.only(bottom: 16), child: Image.asset('assets/images/address/error_address_image.png', width: 200, height: 200)),
                                 ElevatedButton(
                                   onPressed: controller.onRefresh,
                                   style: ElevatedButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 16,
-                                      horizontal: 16,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
+                                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                   ),
-                                  child: Text(
-                                    '새로고침',
-                                    style: Get.textTheme.headlineSmall
-                                        ?.copyWith(color: AppColors.onPrimary),
-                                  ),
+                                  child: Text('새로고침', style: Get.textTheme.headlineSmall?.copyWith(color: AppColors.onPrimary)),
                                 ),
                               ],
                             );
@@ -290,12 +188,7 @@ class _AddressManageViewState extends State<AddressManageView>
               if (!ctrl.isLoadingProgress) {
                 return const SizedBox();
               } else {
-                return Center(
-                  child: SpinKitFadingCircle(
-                    color: AppColors.primary,
-                    size: 50.0,
-                  ),
-                );
+                return Center(child: SpinKitFadingCircle(color: AppColors.primary, size: 50.0));
               }
             },
           ),
@@ -304,12 +197,7 @@ class _AddressManageViewState extends State<AddressManageView>
       floatingActionButton: FloatingActionButton.extended(
         onPressed: controller.onTapAddressAddBtn,
         icon: const Icon(Icons.post_add_outlined),
-        label: Text(
-          '주소 추가',
-          style: Get.textTheme.headlineSmall?.copyWith(
-            color: AppColors.onPrimary,
-          ),
-        ),
+        label: Text('주소 추가', style: Get.textTheme.headlineSmall?.copyWith(color: AppColors.onPrimary)),
       ),
     );
   }

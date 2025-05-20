@@ -33,4 +33,42 @@ class KakaoLocalApi extends GetConnect {
       'query': address,
     }, headers: defaultHeader);
   }
+
+
+  /// 키워드로 장소 검색
+  Future<Response> requestPlaceListWithKeyword({required String keyword, required String x, required String y, required String page}) {
+    return get('/local/search/keyword.json', query: {
+      'x': x,
+      'y': y,
+      'page' : page,
+      'size' : 10.toString(),
+      'radius': 3000.toString(),
+      'query': keyword,
+      'sort': 'accuracy',
+    }, headers: defaultHeader);
+  }
+
+
+  /// 키워드와 카테고리로 장소 검색
+  Future<Response> requestPlaceDetailInfoWithKeywordAndCategory({required Map<String, dynamic> place, required String x, required String y}) {
+    return get('/local/search/keyword.json', query: {
+      'x': x,
+      'y': y,
+      'radius': 3000.toString(),
+      'query': place['keyword'],
+      'category_group_code': place['category_code'],
+      'sort': 'distance',
+    }, headers: defaultHeader);
+  }
+
+  /// 카테고리로 장소 검색
+  Future<Response> requestPlaceDetailInfoWithCategory({required Map<String, dynamic> place, required String x, required String y}) {
+    return get('/local/search/category.json', query: {
+      'x': x,
+      'y': y,
+      'radius': 3000.toString(),
+      'category_group_code': place['category_code'],
+      'sort': 'distance',
+    }, headers: defaultHeader);
+  }
 }

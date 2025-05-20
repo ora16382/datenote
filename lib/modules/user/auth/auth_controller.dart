@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
+import 'package:datenote/util/const/fire_store_collection_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -70,7 +71,7 @@ class AuthController extends GetxController {
   /// return true : 이미 가입 되어있는 경우
   ///         false : 가입이 되어있지 않은 경우
   Future<bool> isUserRegistered(User user) async {
-    final doc = FirebaseFirestore.instance.collection('users').doc(user.uid);
+    final doc = FirebaseFirestore.instance.collection(FireStoreCollectionName.users).doc(user.uid);
     final snapshot = await doc.get();
 
     return snapshot.exists;
