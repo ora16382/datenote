@@ -34,7 +34,9 @@ class HomeController extends GetxController {
 
   /// @author 정준형
   /// @since 2025. 4. 29.
-  /// @comment
+  /// @comment 데이트 플랜 추천 버튼 클릭 콜백
   ///
-  void onTapDatePlanRecommendBtn() {}
+  void onTapDatePlanRecommendBtn() {
+    Get.toNamed(Routes.recommendPlan);
+  }
 }

@@ -1056,6 +1056,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.2"
+  reorderables:
+    dependency: "direct main"
+    description:
+      name: reorderables
+      sha256: "004a886e4878df1ee27321831c838bc1c976311f4ca6a74ce7d561e506540a77"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.0"
   rxdart:
     dependency: transitive
     description:
@@ -1088,6 +1096,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  simple_gesture_detector:
+    dependency: transitive
+    description:
+      name: simple_gesture_detector
+      sha256: ba2cd5af24ff20a0b8d609cec3f40e5b0744d2a71804a2616ae086b9c19d19a3
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1181,6 +1197,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.12.1"
+  step_progress_indicator:
+    dependency: "direct main"
+    description:
+      name: step_progress_indicator
+      sha256: b51bb1fcfc78454359f0658c5a2c21548c3825ebf76e826308e9ca10f383bbb8
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   stream_channel:
     dependency: transitive
     description:
@@ -1213,6 +1237,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.1"
+  table_calendar:
+    dependency: "direct main"
+    description:
+      name: table_calendar
+      sha256: "0c0c6219878b363a2d5f40c7afb159d845f253d061dc3c822aa0d5fe0f721982"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.0"
   term_glyph:
     dependency: transitive
     description:

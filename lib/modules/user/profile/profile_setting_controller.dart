@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datenote/models/user/user_model.dart';
 import 'package:datenote/modules/user/user_controller.dart';
+import 'package:datenote/util/const/fire_store_collection_name.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -37,9 +38,9 @@ class ProfileSettingViewController extends GetxController {
       return;
     }
 
-    /// TODO 중복 검사
+    /// 중복 검사
     final query = await FirebaseFirestore.instance
-        .collection('users')
+        .collection(FireStoreCollectionName.users)
         .where('displayName', isEqualTo: nickname)
         .limit(1)
         .get();
@@ -54,7 +55,7 @@ class ProfileSettingViewController extends GetxController {
     }
 
     try {
-      final doc = FirebaseFirestore.instance.collection('users').doc(user.uid);
+      final doc = FirebaseFirestore.instance.collection(FireStoreCollectionName.users).doc(user.uid);
 
       await doc.set({
         'uid': user.uid,

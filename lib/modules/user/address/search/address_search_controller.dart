@@ -5,6 +5,7 @@ import 'package:datenote/modules/user/address/daum_post_web/daum_post_web_view.d
 import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
 import 'package:datenote/services/kakao_local_service.dart';
+import 'package:datenote/util/const/fire_store_collection_name.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:daum_postcode_search/daum_postcode_search.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,9 @@ class AddressSearchController extends GetxController {
 
   /// 로딩 스핀 위젯 표시 상태
   bool isLoadingProgress = false;
+
+  /// 주소록 저장 여부
+  final isSaveAddress = false.obs;
 
   @override
   void onInit() {
@@ -229,14 +233,32 @@ class AddressSearchController extends GetxController {
     }
   }
 
-  /// @author 정준형
-  /// @since 2025. 4. 18.
-  /// @comment 주소 저장 / 수정
-  ///
-  Future<void> updateAddress() async {
+   /// @author 정준형
+    /// @since 2025. 4. 30.
+    /// @comment 주소록에서 불러오기 콜백, 데이트 플랜 추천에서 사용
+    ///
+  Future<void> loadAddressFromAddressBook() async {
+    final AddressModel? result =
+    (await Get.toNamed(Routes.addressManage, parameters: {'isLoadAddress': 'true'})) as AddressModel?;
+
+    if(result != null) {
+      location = Location(
+        latitude: result.latitude,
+        longitude: result.longitude,
+        timestamp: DateTime.now(),
+      );
+
+      _addressController.text = result.address;
+      _detailAddressController.text = result.detailAddress;
+      isSaveAddress.value = false;
+    }
+  }
+
+  bool validateAddress({bool isWithoutAddressName = false}) {
     final address = _addressController.text.trim();
     if (address.isEmpty) {
-      return;
+      showToast('주소를 추가해주세요.');
+      return false;
     }
 
     final detailAddress = _detailAddressController.text.trim();
@@ -247,16 +269,40 @@ class AddressSearchController extends GetxController {
     //   return;
     // }
 
-    final addressName = _addressNameController.text.trim();
-    if (addressName.isEmpty) {
-      addressNameFocusNode.requestFocus();
-      return;
+    if(!isWithoutAddressName) {
+      final addressName = _addressNameController.text.trim();
+      if (addressName.isEmpty) {
+        showToast('저장될 주소 이름을 입력해주세요');
+        addressNameFocusNode.requestFocus();
+        return false;
+      }
     }
 
     if (location == null) {
       showToast('위치 정보를 읽어오는데 실패했습니다. 주소를 다시 설정해주세요');
+      return false;
+    }
+
+    return true;
+  }
+  /// @author 정준형
+  /// @since 2025. 4. 18.
+  /// @comment 주소 저장 / 수정
+  ///
+  Future<void> updateAddress({bool isWithoutAddressName = false}) async {
+    if(isWithoutAddressName) {
+      _addressNameController.text = '주소_${Uuid().v4().substring(0, 3)}';
+    }
+
+    if(!validateAddress()){
       return;
     }
+
+    final address = _addressController.text.trim();
+
+    final detailAddress = _detailAddressController.text.trim();
+
+    final addressName = _addressNameController.text.trim();
 
     isLoadingProgress = true;
     update([':loading']);
@@ -266,9 +312,9 @@ class AddressSearchController extends GetxController {
         String addressId = addressModel.id;
 
         await FirebaseFirestore.instance
-            .collection('address')
+            .collection(FireStoreCollectionName.address)
             .doc(userCtrl.currentUser.uid)
-            .collection('addresses')
+            .collection(FireStoreCollectionName.addresses)
             .doc(addressId)
             .update({
               'address': address,
@@ -303,9 +349,9 @@ class AddressSearchController extends GetxController {
         );
 
         await FirebaseFirestore.instance
-            .collection('address')
+            .collection(FireStoreCollectionName.address)
             .doc(userCtrl.currentUser.uid)
-            .collection('addresses')
+            .collection(FireStoreCollectionName.addresses)
             .doc(addressId)
             .set(addressModel.toJson());
 
@@ -318,12 +364,6 @@ class AddressSearchController extends GetxController {
       update([':loading']);
     }
   }
-
-  /// @author 정준형
-  /// @since 2025. 4. 18.
-  /// @comment 주소 수정
-  ///
-  Future<void> modifyAddress() async {}
 
   /// @author 정준형
   /// @since 2025. 4. 18.

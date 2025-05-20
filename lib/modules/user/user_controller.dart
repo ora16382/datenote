@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datenote/models/user/user_model.dart';
 import 'package:datenote/modules/user/auth/auth_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
+import 'package:datenote/util/const/fire_store_collection_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -26,7 +27,7 @@ class UserController extends GetxController {
       return;
     }
 
-    final snapshot = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+    final snapshot = await FirebaseFirestore.instance.collection(FireStoreCollectionName.users).doc(uid).get();
 
     if (snapshot.exists) {
       currentUser = UserModel.fromJson(snapshot.data()!);

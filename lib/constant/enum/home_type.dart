@@ -1,1 +1,1 @@
-enum HomeType { main, event, community, myInfo }
+enum HomeType { main, community, myInfo }
