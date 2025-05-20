@@ -54,7 +54,7 @@ dependencies:
   #youtube_player_iframe: ^5.2.1 // iOS 용
 
   # URL 열기 (링크로 연결할 경우 사용)
-  url_launcher: ^6.2.5
+  url_launcher: ^6.3.1
 
   # 시간 포맷팅
   jiffy: ^6.4.3
@@ -109,11 +109,26 @@ dependencies:
   # 다음 주소 검색
   daum_postcode_search: ^0.0.3
 
-  # 좌표 <-> 주소 변환
+  # 좌표 <-> 주소 변환 (사용x)
   geocoding: ^3.0.0
+
+  # 위치 정보 (GPS 등) 접근
   geolocator: ^14.0.0
+
+  # 날짜, 시간 포맷 처리 (DateFormat 등)
   intl: ^0.20.2
+
+  # 플로팅 액션 버튼 여러 개 펼치기 (FAB 확장)
   flutter_speed_dial: ^7.0.0
+
+  # 스텝 기반 프로그레스 바 UI
+  step_progress_indicator: ^1.0.2
+
+  # 달력 UI 구현 (커스텀 가능)
+  table_calendar: ^3.2.0
+
+  # 여러 위젯 재정렬 가능 (Wrap, Column 등 유연하게)
+  reorderables: ^0.6.0
 
 dev_dependencies:
   flutter_test:
