@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_notification_channel_id" translatable="false">high_importance_channel</string>
+    <!-- image_cropper - uCrop 텍스트 수정 -->
+    <string name="ucrop_rotate">회전</string>
+    <string name="ucrop_scale">확대/축소</string>
+</resources>

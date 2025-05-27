@@ -1,11 +1,13 @@
 import 'package:datenote/models/place/place_model.dart';
 import 'package:datenote/modules/main/recommendPlan/detail/recommend_plan_detail_controller.dart';
+import 'package:datenote/util/widget/common_loading_indicator_widget.dart';
 import 'package:datenote/util/widget/common_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:datenote/util/app_color.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RecommendPlanDetailView extends StatefulWidget {
@@ -56,6 +58,11 @@ class _RecommendPlanDetailViewState extends State<RecommendPlanDetailView> {
         actions: [
           Builder(
             builder: (context) {
+              if (detailCtrl.isCommunity) {
+                /// 데이트 기록, 커뮤니티를 통해 들어왔으면 수정, 삭제 동작이 어차피 불가능 하기 때문에 숨김처리
+                return SizedBox.shrink();
+              }
+
               return PopupMenuButton<String>(
                 onSelected: (value) {
                   if (value == 'edit') {
@@ -77,43 +84,87 @@ class _RecommendPlanDetailViewState extends State<RecommendPlanDetailView> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        child: GetBuilder<RecommendPlanDetailController>(
-          id: ':datePlanBody',
-          builder: (context) {
-            if (detailCtrl.isLoadingProgress) {
-              return Center(child: SpinKitFadingCircle(color: AppColors.primary, size: 50.0));
-            } else {
-              return ListView(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 12),
-                    child: Text(
-                      detailCtrl.recommendPlanModel.title,
-                      style: Get.textTheme.titleLarge?.copyWith(color: AppColors.primary),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 32),
-                    child: Text(detailCtrl.recommendPlanModel.description, style: Get.textTheme.bodyMedium),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 8),
-                    child: Text('📍 기준 장소', style: Get.textTheme.titleMedium),
-                  ),
-                  _buildBasePlaceCard(),
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            child: GetBuilder<RecommendPlanDetailController>(
+              id: ':datePlanBody',
+              builder: (context) {
+                if (detailCtrl.isDataLoadingProgress) {
+                  return Center(child: SpinKitFadingCircle(color: AppColors.primary, size: 50.0));
+                } else {
+                  return ListView(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 12),
+                        child: Text(
+                          detailCtrl.recommendPlanModel.title,
+                          style: Get.textTheme.titleLarge?.copyWith(color: AppColors.primary),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 32),
+                        child: Text(detailCtrl.recommendPlanModel.description, style: Get.textTheme.bodyMedium),
+                      ),
 
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 8),
-                    child: Text('📒 데이트 플랜', style: Get.textTheme.titleMedium),
-                  ),
-                  ...detailCtrl.recommendPlanModel.places.map((place) => _buildPlaceCard(place)).toList(),
-                ],
-              );
-            }
-          },
-        ),
+                      /// 날짜
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 20.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(right: 8.0),
+                              child: Text(
+                                '📅 데이트 날짜 :',
+                                style: Get.textTheme.titleMedium?.copyWith(
+                                  color: AppColors.primary.withAlpha(192),
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              DateFormat('yyyy.MM.dd (E)', 'ko_KR').format(detailCtrl.recommendPlanModel.date),
+                              style: Get.textTheme.titleMedium?.copyWith(
+                                color: AppColors.primary.withAlpha(192),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 8),
+                        child: Text('📍 기준 장소', style: Get.textTheme.titleMedium),
+                      ),
+                      _buildBasePlaceCard(),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 8),
+                        child: Text('📒 데이트 플랜', style: Get.textTheme.titleMedium),
+                      ),
+                      ...detailCtrl.recommendPlanModel.places.map((place) => _buildPlaceCard(place)).toList(),
+
+                      /// 생성일
+                      Container(
+                        margin: const EdgeInsets.only(top: 16, bottom: 24),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              '생성일: ${DateFormat('yyyy.MM.dd HH:mm').format(detailCtrl.recommendPlanModel.createdAt)}',
+                              style: Get.textTheme.bodySmall?.copyWith(color: AppColors.grey),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                }
+              },
+            ),
+          ),
+          CommonLoadingIndicator<RecommendPlanDetailController>(),
+        ],
       ),
     );
   }

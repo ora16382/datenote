@@ -4,13 +4,14 @@ import 'package:datenote/constant/enum/recommend_plan_step_type.dart';
 import 'package:datenote/main.dart';
 import 'package:datenote/models/address/address_model.dart';
 import 'package:datenote/models/recommend_plan/recommend_plan_model.dart';
+import 'package:datenote/modules/main/main_controller.dart';
 import 'package:datenote/modules/user/address/search/address_search_controller.dart';
 import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
 import 'package:datenote/services/kakao_local_service.dart';
 import 'package:datenote/services/open_ai_service.dart';
 import 'package:datenote/services/weather_service.dart';
-import 'package:datenote/util/const/fire_store_collection_name.dart';
+import 'package:datenote/constant/config/fire_store_collection_name.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:datenote/util/widget/dialog.dart';
 import 'package:geolocator/geolocator.dart';
@@ -252,6 +253,13 @@ class RecommendPlanController extends GetxController {
         .collection(FireStoreCollectionName.recommendDatePlan)
         .doc(recommendDatePlanId)
         .set(recommendDatePlanMap);
+
+    /// 메인-캘린더 업데이트
+    try {
+      final mainCtrl = Get.find<MainController>();
+      mainCtrl.updateDatePlanData(selectedDate.value);
+    } catch (e){/// 별다른 동작 없음
+    }
 
     /// depth 1개 삭제
     Get.back();

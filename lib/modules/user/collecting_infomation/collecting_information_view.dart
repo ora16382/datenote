@@ -41,7 +41,7 @@ class _CollectingInformationViewState extends State<CollectingInformationView> {
           statusBarColor: Colors.transparent,
         ),
         centerTitle: true,
-        title: Text(controller.isModify ? '수정하기' : '추가 정보', style: Get.textTheme.titleSmall),
+        title: Text(controller.isModify ? '수정하기' : '추가 정보', style: Get.textTheme.titleMedium),
         actions: [
           GetBuilder<CollectingInformationController>(
             builder: (_) {

@@ -5,7 +5,7 @@ import 'package:datenote/constant/enum/date_style.dart';
 import 'package:datenote/constant/enum/gender.dart';
 import 'package:datenote/constant/enum/region.dart';
 import 'package:datenote/modules/user/user_controller.dart';
-import 'package:datenote/util/const/fire_store_collection_name.dart';
+import 'package:datenote/constant/config/fire_store_collection_name.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:datenote/util/widget/dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
