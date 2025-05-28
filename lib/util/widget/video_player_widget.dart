@@ -32,6 +32,14 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         _controller.setLooping(true);
         _controller.setVolume(0); // 초기 mute
         _controller.play(); // 자동 재생
+        _controller.addListener(() {
+          /// 상태 변경 감지하여 상태 변수에 저장
+          final isPlaying = _controller.value.isPlaying;
+          logger.i(isPlaying != this.isPlaying.value);
+          if (isPlaying != this.isPlaying.value) {
+            this.isPlaying.value = isPlaying;
+          }
+        },);
       });
 
     widget.controller.videoPlayerControllerMap.putIfAbsent(widget.assetModel.id, () => _controller);
@@ -48,8 +56,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     } else {
       _controller.play();
     }
-
-    isPlaying.value = !isPlaying.value;
   }
 
   @override
