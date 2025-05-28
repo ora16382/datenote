@@ -35,7 +35,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         _controller.addListener(() {
           /// 상태 변경 감지하여 상태 변수에 저장
           final isPlaying = _controller.value.isPlaying;
-          logger.i(isPlaying != this.isPlaying.value);
+
           if (isPlaying != this.isPlaying.value) {
             this.isPlaying.value = isPlaying;
           }

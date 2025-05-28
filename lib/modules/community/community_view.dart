@@ -53,8 +53,8 @@ class CommunityViewState extends State<CommunityView> {
       body: Stack(
         children: [
           Container(
-            margin: const EdgeInsets.only(bottom: 48),
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+            // margin: const EdgeInsets.only(bottom: 48),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: GetBuilder<CommunityController>(
               id: ':communityList',
               builder: (_) {

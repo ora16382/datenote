@@ -53,8 +53,8 @@ class DatingHistoryListViewState extends State<DatingHistoryListView> {
       body: Stack(
         children: [
           Container(
-            margin: const EdgeInsets.only(bottom: 48),
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+            // margin: const EdgeInsets.only(bottom: 48),
+            padding: const EdgeInsets.symmetric( horizontal: 16),
             child: GetBuilder<DatingHistoryListController>(
               id: ':datingHistoryList',
               builder: (_) {

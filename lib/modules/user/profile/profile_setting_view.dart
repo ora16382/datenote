@@ -115,7 +115,7 @@ class ProfileSettingView extends StatelessWidget {
                         ),
                         child: Text(
                           '닉네임 등록하기',
-                          style: Get.textTheme.headlineSmall,
+                          style: Get.textTheme.headlineSmall?.copyWith(color: AppColors.onPrimary),
                         ),
                       ),
                     ),

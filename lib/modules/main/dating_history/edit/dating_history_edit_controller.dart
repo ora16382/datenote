@@ -801,14 +801,19 @@ class DatingHistoryEditController extends GetxController with ControllerLoadingM
   /// @comment 데이트 날짜 선택 콜백
   ///
   Future<void> onTapDatePicker() async {
-    /// date 순서로 불러오는 목록에서 정렬이 깨지는 문제때문에 date 는 수정 불가능하게 막는다.
-    showToast('데이트 날짜는 수정이 불가능합니다.');
-    return;
+    if(isModify) {
+      /// date 순서로 불러오는 목록에서 정렬이 깨지는 문제때문에 date 는 수정 불가능하게 막는다.
+      showToast('데이트 날짜는 수정이 불가능합니다.');
+      return;
+    }
+
     final picked = await showDatePicker(
       context: Get.context!,
       initialDate: selectedDate.value,
       firstDate: DateTime.now().subtract(Duration(days: 30)),
       lastDate: DateTime.now(),
+      cancelText: '닫기',
+      confirmText: '확인',
     );
 
     if (picked != null) {

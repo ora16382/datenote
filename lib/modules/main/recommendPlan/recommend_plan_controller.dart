@@ -178,25 +178,25 @@ class RecommendPlanController extends GetxController {
 
     Map<String, dynamic> recommendDatePlanMap;
 
-    // /// 2. open ai api 요청으로 목록 받기
-    // try {
-    //   isOpenAIAPILoadingProgress = true;
-    //   update([':openAIAPILoading']);
-    //
-    //   recommendDatePlanMap = await _requestRecommendDatePlanToOpenAI(addressSearchController);
-    // } catch (e) {
-    //   logger.e(e);
-    //   showToast('데이트 플랜 추천 도중 오류가 발생하였습니다. 잠시 후 다시 시도해주세요.');
-    //   return;
-    // } finally {
-    //   isOpenAIAPILoadingProgress = false;
-    //   update([':openAIAPILoading']);
-    // }
+    /// 2. open ai api 요청으로 목록 받기
+    try {
+      isOpenAIAPILoadingProgress = true;
+      update([':openAIAPILoading']);
+
+      recommendDatePlanMap = await _requestRecommendDatePlanToOpenAI(addressSearchController);
+    } catch (e) {
+      logger.e(e);
+      showToast('데이트 플랜 추천 도중 오류가 발생하였습니다. 잠시 후 다시 시도해주세요.');
+      return;
+    } finally {
+      isOpenAIAPILoadingProgress = false;
+      update([':openAIAPILoading']);
+    }
 
     /// 타입별로 샘플 가져오기
-    recommendDatePlanMap = _getSampleRecommendDatePlan();
-
-    logger.i(recommendDatePlanMap);
+    // recommendDatePlanMap = _getSampleRecommendDatePlan();
+    //
+    // logger.i(recommendDatePlanMap);
 
     /// 3. open ai api 의 장소 결과를 각각 카카오 로컬 api 로 요청하기
     try {

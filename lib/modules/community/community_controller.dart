@@ -312,6 +312,7 @@ class CommunityController extends GetxController with ControllerLoadingMix {
         });
       });
     } catch (e) {
+      logger.e(e);
       favoriteLoadingProgressMap[datingHistoryModel.id] = false;
       update([':favorite:datingHistoryItem:${datingHistoryModel.id}']);
 
