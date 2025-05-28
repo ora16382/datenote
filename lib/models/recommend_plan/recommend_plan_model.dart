@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:datenote/constant/converter/timestamp_converter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:datenote/models/place/place_model.dart';
@@ -12,10 +14,11 @@ abstract class RecommendPlanModel with _$RecommendPlanModel {
   @JsonSerializable(explicitToJson: true)
   const factory RecommendPlanModel({
     required String id, // UUID
+    required String userId,
     @JsonKey(name: 'date_plan_title') required String title,
     @JsonKey(name: 'why_recommend_dating_plans') required String description,
     @JsonKey(name: 'date_places') required List<PlaceModel> places,
-    @JsonKey(name: 'baseAddress') required AddressModel baseAddress,
+    required AddressModel baseAddress,
     @TimestampConverterNotNull() required DateTime date,
     @TimestampConverterNotNull() required DateTime createdAt,
     @TimestampConverterNotNull() required DateTime modifiedAt,

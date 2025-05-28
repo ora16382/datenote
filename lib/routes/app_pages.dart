@@ -1,7 +1,11 @@
 
 import 'package:datenote/modules/home/home_view.dart';
+import 'package:datenote/modules/main/dating_history/detail/dating_history_detail_view.dart';
+import 'package:datenote/modules/main/dating_history/edit/dating_history_edit_view.dart';
+import 'package:datenote/modules/main/dating_history/list%20/dating_history_list_view.dart';
 import 'package:datenote/modules/main/recommendPlan/detail/recommend_plan_detail_view.dart';
 import 'package:datenote/modules/main/recommendPlan/edit/recommend_plan_edit_view.dart';
+import 'package:datenote/modules/main/recommendPlan/list/recommend_plan_list_view.dart';
 import 'package:datenote/modules/main/recommendPlan/place/search/place_search_view.dart';
 import 'package:datenote/modules/main/recommendPlan/recommend_plan_view.dart';
 import 'package:datenote/modules/splash/splash_view.dart';
@@ -40,8 +44,13 @@ class AppPages {
     GetPage(name: Routes.recommendPlan, page: () => const RecommendPlanView()),
     GetPage(name: Routes.recommendPlanDetail, page: () => const RecommendPlanDetailView()),
     GetPage(name: Routes.recommendPlanEdit, page: () => const RecommendPlanEditView()),
-
+    GetPage(name: Routes.recommendPlanList, page: () => const RecommendPlanListView()),
     /// 데이트 플랜 - 플레이스
     GetPage(name: Routes.placeSearch, page: () => const PlaceSearchView()),
+
+    /// 데이트 기록
+    GetPage(name: Routes.datingHistoryEdit, page: () => const DatingHistoryEditView()),
+    GetPage(name: Routes.datingHistoryList, page: () => const DatingHistoryListView()),
+    GetPage(name: Routes.datingHistoryDetail, page: () => const DatingHistoryDetailView()),
   ];
 }

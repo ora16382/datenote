@@ -4,6 +4,7 @@ import 'package:datenote/util/widget/common_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class DateSelector extends StatefulWidget {
   final DateTime? initialDate;
@@ -58,7 +59,7 @@ class _DateSelectorState extends State<DateSelector> {
           },
           child: Container(
             width: double.infinity,
-            height: 72,
+            height: 80,
             margin: const EdgeInsets.symmetric(vertical: 6),
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             decoration: BoxDecoration(
@@ -85,10 +86,18 @@ class _DateSelectorState extends State<DateSelector> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
+                      margin: const EdgeInsets.only(right: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(color: Colors.black12, blurRadius: 4),
+                        ],
+                      ),
                       child: buildNetworkImage(
                         imagePath: iconUrl,
-                        width: 24,
-                        height: 24,
+                        width: 32,
+                        height: 32,
                       ),
                     ),
                     Text(

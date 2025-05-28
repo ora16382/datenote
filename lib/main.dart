@@ -6,13 +6,15 @@ import 'package:datenote/services/kakao_local_service.dart';
 import 'package:datenote/services/open_ai_service.dart';
 import 'package:datenote/services/weather_service.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:logger/logger.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'constant/theme/app_theme.dart';
 import 'firebase_options.dart';
 import 'modules/user/user_controller.dart';
@@ -23,7 +25,7 @@ Future<void> main() async {
   /// UI 예외 처리 (위젯 에러는 runZonedGuarded 와 별도)
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.dumpErrorToConsole(details);
-    logger.e(details);
+    // logger.e(details);
     /// firebase crashlytics 등 처리
   };
 
@@ -37,6 +39,9 @@ Future<void> main() async {
       WidgetsFlutterBinding.ensureInitialized();
 
       await initializeDateFormatting('ko'); // 한글 요일 쓰려면 꼭 필요
+
+      /// Jiffy - 날짜 및 시간 관련 라이브러리 로케일 설정
+      await Jiffy.setLocale(Get.deviceLocale?.languageCode ?? 'ko');
 
       /// .env 파일 로드
       await dotenv.load(fileName: ".env");
@@ -74,6 +79,7 @@ class DateNoteApp extends StatelessWidget {
       title: 'DATENOTE',
       debugShowCheckedModeBanner: false,
       locale: Get.deviceLocale,
+      fallbackLocale: const Locale('ko', 'KR'),
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,
       initialBinding: BindingsBuilder(() {
@@ -86,6 +92,13 @@ class DateNoteApp extends StatelessWidget {
         Get.put(WeatherService(), permanent: true);
       }),
       theme: themeData,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        DefaultCupertinoLocalizations.delegate,
+        // FormBuilderLocalizations.delegate,
+      ],
     );
   }
 }

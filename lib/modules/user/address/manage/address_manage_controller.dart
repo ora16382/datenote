@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:datenote/main.dart';
 import 'package:datenote/models/address/address_model.dart';
 import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
-import 'package:datenote/util/const/fire_store_collection_name.dart';
+import 'package:datenote/constant/config/fire_store_collection_name.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:datenote/util/widget/dialog.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -85,10 +86,7 @@ class AddressManageController extends GetxController {
                   //pagingController.fetchNextPage();
                 } else {
                   /// 아니면 제일 상단에 노출시키기 위해 첫번째 배열에 추가
-                  pagingController.pages?.firstOrNull?.insert(
-                    0,
-                    AddressModel.fromJson(data),
-                  );
+                  pagingController.pages?.firstOrNull?.insert(0, AddressModel.fromJson(data));
 
                   update([':addressList']);
                 }
@@ -98,8 +96,7 @@ class AddressManageController extends GetxController {
 
               if (data != null) {
                 outerLoop:
-                for (final List<AddressModel> page
-                    in pagingController.pages ?? []) {
+                for (final List<AddressModel> page in pagingController.pages ?? []) {
                   for (var addressModel in page.indexed) {
                     if (addressModel.$2.id == documentChange.doc.id) {
                       page[addressModel.$1] = AddressModel.fromJson(data);
@@ -108,18 +105,14 @@ class AddressManageController extends GetxController {
                   }
                 }
 
-                update([':addressList']);
-
-                /// 불변 객체이기 때문에 아래 방법을 사용할 수 없음
-                //update([':address:${documentChange.doc.id}']);
+                update([':addressItem:${documentChange.doc.id}']);
               }
             } else if (documentChange.type == DocumentChangeType.removed) {
               List<AddressModel>? containPage;
               AddressModel? findAddressModel;
 
               outerLoop:
-              for (final List<AddressModel> page
-                  in pagingController.pages ?? []) {
+              for (final List<AddressModel> page in pagingController.pages ?? []) {
                 for (var addressModel in page.indexed) {
                   if (addressModel.$2.id == documentChange.doc.id) {
                     containPage = page;
@@ -134,22 +127,6 @@ class AddressManageController extends GetxController {
 
               /// 리스트 업데이트
               update([':addressList']);
-
-              // /// 남은 데이터 존재 여부 / 해당 코드는 필요 없다. 데이터가 없으면 알아서 noData 보여줌
-              // bool checkExistsData = false;
-              //
-              // for (final List<AddressModel> page
-              //     in pagingController.pages ?? []) {
-              //   if (page.isNotEmpty) {
-              //     checkExistsData = true;
-              //     break;
-              //   }
-              // }
-              //
-              // /// 데이터가 존재하지 않으면
-              // if (!checkExistsData) {
-              //   refresh();
-              // }
             }
           }
         });
@@ -157,12 +134,6 @@ class AddressManageController extends GetxController {
 
   @override
   void onReady() {
-    /// 앱에서 주소 관리 처음 진입시에만 호출
-    if (!(GetStorage().read<bool>("isFirstApproach") ?? false)) {
-      /// TODO
-      GetStorage().write("isFirstApproach", true);
-    }
-
     super.onReady();
   }
 
@@ -228,11 +199,7 @@ class AddressManageController extends GetxController {
   /// @comment 수정 버튼 클릭 콜백
   ///
   Future<void> onTapEditBtn(AddressModel addressModel) async {
-    Get.toNamed(
-      Routes.addressSearch,
-      parameters: {'isModify': 'true'},
-      arguments: addressModel,
-    );
+    Get.toNamed(Routes.addressSearch, parameters: {'isModify': 'true'}, arguments: addressModel);
 
     /// 수정 된 데이터 반영은 streamSnapshots listen 에서 처리한다.
   }
@@ -276,7 +243,7 @@ class AddressManageController extends GetxController {
   /// @comment 주소록 클릭 콜백
   ///
   void onTapAddress(AddressModel addressModel) {
-    if(isLoadAddress) {
+    if (isLoadAddress) {
       Get.back(result: addressModel);
     } else {
       /// 동작 없음

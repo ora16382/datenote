@@ -1,1 +1,47 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"datenote-29253","appId":"1:639186366647:android:145d4e171ac07e8a4b1d32","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"datenote-29253","appId":"1:639186366647:ios:33495345dd647dfa4b1d32","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"datenote-29253","configurations":{"android":"1:639186366647:android:145d4e171ac07e8a4b1d32","ios":"1:639186366647:ios:33495345dd647dfa4b1d32"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "datenote-29253",
+          "appId": "1:639186366647:android:145d4e171ac07e8a4b1d32",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "datenote-29253",
+          "appId": "1:639186366647:ios:33495345dd647dfa4b1d32",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "datenote-29253",
+          "configurations": {
+            "android": "1:639186366647:android:145d4e171ac07e8a4b1d32",
+            "ios": "1:639186366647:ios:33495345dd647dfa4b1d32"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    }
+  ]
+}

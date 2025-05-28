@@ -5,7 +5,7 @@ import 'package:datenote/modules/user/address/daum_post_web/daum_post_web_view.d
 import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
 import 'package:datenote/services/kakao_local_service.dart';
-import 'package:datenote/util/const/fire_store_collection_name.dart';
+import 'package:datenote/constant/config/fire_store_collection_name.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:daum_postcode_search/daum_postcode_search.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +97,8 @@ class AddressSearchController extends GetxController {
     _addressController.dispose();
     _detailAddressController.dispose();
     _detailAddressFocusNode.dispose();
-    addressNameController.dispose();
+    _addressNameController.dispose();
+    _addressNameFocusNode.dispose();
 
     super.onClose();
   }

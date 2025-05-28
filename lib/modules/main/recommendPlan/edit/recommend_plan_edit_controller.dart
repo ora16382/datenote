@@ -4,7 +4,7 @@ import 'package:datenote/models/place/place_model.dart';
 import 'package:datenote/models/recommend_plan/recommend_plan_model.dart';
 import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
-import 'package:datenote/util/const/fire_store_collection_name.dart';
+import 'package:datenote/constant/config/fire_store_collection_name.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:datenote/util/widget/dialog.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +26,9 @@ class RecommendPlanEditController extends GetxController {
 
   /// 데이트 플랜 모델
   late RecommendPlanModel recommendPlanModel;
+
+  /// 로딩 상태
+  bool isLoadingProgress = false;
 
   @override
   void onInit() {
@@ -51,12 +54,22 @@ class RecommendPlanEditController extends GetxController {
     super.onReady();
   }
 
+  @override
+  void onClose() {
+    _titleController.dispose();
+    descriptionController.dispose();
+    super.onClose();
+  }
+
   /// @author 정준형
   /// @since 2025. 5. 19.
   /// @comment 수정사항 저장 콜백
   ///
   Future<void> onTapModify() async {
     try {
+      isLoadingProgress = true;
+      update([':loading']);
+
       await FirebaseFirestore.instance
           .collection(FireStoreCollectionName.recommendDatePlan)
           .doc(recommendPlanModel.id)
@@ -75,6 +88,9 @@ class RecommendPlanEditController extends GetxController {
     } catch (e) {
       showToast('데이트 플랜 수정에 실패했습니다. 잠시 후 다시 시도해 주세요.');
       return;
+    } finally {
+      isLoadingProgress = false;
+      update([':loading']);
     }
   }
 

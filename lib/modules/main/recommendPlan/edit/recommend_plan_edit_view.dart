@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:datenote/util/app_color.dart';
 import 'package:datenote/util/widget/common_widget.dart';
 import 'package:datenote/modules/main/recommendPlan/edit/recommend_plan_edit_controller.dart';
 import 'package:datenote/models/place/place_model.dart';
+import 'package:intl/intl.dart';
 import 'package:reorderables/reorderables.dart';
 
 class RecommendPlanEditView extends StatefulWidget {
@@ -103,6 +105,25 @@ class _RecommendPlanEditViewState extends State<RecommendPlanEditView> {
                   ),
                 ),
               ),
+              /// 날짜
+              Container(
+                margin: const EdgeInsets.only(bottom: 20.0),
+                child: Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(right: 8.0),
+                      child: Text(
+                        '📅 데이트 날짜 :',
+                        style: Get.textTheme.titleMedium,
+                      ),
+                    ),
+                    Text(
+                      DateFormat('yyyy.MM.dd (E)', 'ko_KR').format(editCtrl.recommendPlanModel.date),
+                      style: Get.textTheme.titleMedium,
+                    ),
+                  ],
+                ),
+              ),
               Container(
                 margin: const EdgeInsets.only(bottom: 8),
                 alignment: Alignment.centerLeft,
@@ -153,6 +174,16 @@ class _RecommendPlanEditViewState extends State<RecommendPlanEditView> {
                 child: Text('저장하기', style: Get.textTheme.titleMedium?.copyWith(color: Colors.white)),
               ),
             ),
+          ),
+          GetBuilder<RecommendPlanEditController>(
+            id: ':loading',
+            builder: (ctrl) {
+              if (!ctrl.isLoadingProgress) {
+                return const SizedBox();
+              } else {
+                return Center(child: SpinKitFadingCircle(color: AppColors.primary, size: 50.0));
+              }
+            },
           ),
         ],
       ),
