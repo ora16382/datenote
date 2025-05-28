@@ -32,9 +32,7 @@ class RecommendPlanController extends GetxController {
   final weatherService = Get.find<WeatherService>();
 
   /// 스텝 단계
-  Rx<RecommendPlanStepType> recommendPlanStepType = Rx(
-    RecommendPlanStepType.date,
-  );
+  Rx<RecommendPlanStepType> recommendPlanStepType = Rx(RecommendPlanStepType.date);
 
   /// 선택된 날짜
   final selectedDate = DateTime.now().obs;
@@ -106,8 +104,7 @@ class RecommendPlanController extends GetxController {
         Get.back();
       }
     } else {
-      recommendPlanStepType.value =
-          RecommendPlanStepType.values[recommendPlanStepType.value.index - 1];
+      recommendPlanStepType.value = RecommendPlanStepType.values[recommendPlanStepType.value.index - 1];
       update([':progressIndicator', ':stepBody']);
     }
   }
@@ -131,18 +128,14 @@ class RecommendPlanController extends GetxController {
           showToast('날씨 정보를 불러오는중입니다. 잠시만 기다려주세요');
           return;
         }
-        recommendPlanStepType.value =
-            RecommendPlanStepType.values[recommendPlanStepType.value.index + 1];
+        recommendPlanStepType.value = RecommendPlanStepType.values[recommendPlanStepType.value.index + 1];
         break;
       case RecommendPlanStepType.address:
-        if (!Get.find<AddressSearchController>(
-          tag: ':recommend_plan',
-        ).validateAddress(isWithoutAddressName: true)) {
+        if (!Get.find<AddressSearchController>(tag: ':recommend_plan').validateAddress(isWithoutAddressName: true)) {
           return;
         }
 
-        recommendPlanStepType.value =
-            RecommendPlanStepType.values[recommendPlanStepType.value.index + 1];
+        recommendPlanStepType.value = RecommendPlanStepType.values[recommendPlanStepType.value.index + 1];
 
         break;
       case RecommendPlanStepType.preferredDateType:
@@ -167,8 +160,7 @@ class RecommendPlanController extends GetxController {
   ///
   Future<void> recommendDatePlan() async {
     /// 1. 주소 저장
-    AddressSearchController addressSearchController =
-        Get.find<AddressSearchController>(tag: ':recommend_plan');
+    AddressSearchController addressSearchController = Get.find<AddressSearchController>(tag: ':recommend_plan');
 
     if (addressSearchController.isSaveAddress.value) {
       try {
@@ -186,14 +178,12 @@ class RecommendPlanController extends GetxController {
 
     Map<String, dynamic> recommendDatePlanMap;
 
-    /// 2. open ai api 요청으로 목록 받기
+    // /// 2. open ai api 요청으로 목록 받기
     // try {
     //   isOpenAIAPILoadingProgress = true;
     //   update([':openAIAPILoading']);
     //
-    //   recommendDatePlanMap = await _requestRecommendDatePlanToOpenAI(
-    //     addressSearchController,
-    //   );
+    //   recommendDatePlanMap = await _requestRecommendDatePlanToOpenAI(addressSearchController);
     // } catch (e) {
     //   logger.e(e);
     //   showToast('데이트 플랜 추천 도중 오류가 발생하였습니다. 잠시 후 다시 시도해주세요.');
@@ -206,15 +196,14 @@ class RecommendPlanController extends GetxController {
     /// 타입별로 샘플 가져오기
     recommendDatePlanMap = _getSampleRecommendDatePlan();
 
+    logger.i(recommendDatePlanMap);
+
     /// 3. open ai api 의 장소 결과를 각각 카카오 로컬 api 로 요청하기
     try {
       isKakaoLocalAPILoadingProgress = true;
       update([':kakaoLocalAPILoading']);
 
-      await requestRecommendPlaceDataDetailInfoAndParsing(
-        recommendDatePlanMap,
-        addressSearchController,
-      );
+      await requestRecommendPlaceDataDetailInfoAndParsing(recommendDatePlanMap, addressSearchController);
     } catch (e) {
       logger.e(e);
       showToast('장소 검색 도중 오류가 발생하였습니다. 잠시 후 다시 시도해주세요.');
@@ -258,17 +247,15 @@ class RecommendPlanController extends GetxController {
     try {
       final mainCtrl = Get.find<MainController>();
       mainCtrl.updateDatePlanData(selectedDate.value);
-    } catch (e){/// 별다른 동작 없음
+    } catch (e) {
+      /// 별다른 동작 없음
     }
 
     /// depth 1개 삭제
     Get.back();
 
     /// 5. 상세보기로 진입하기
-    Get.toNamed(
-      Routes.recommendPlanDetail,
-      arguments: RecommendPlanModel.fromJson(recommendDatePlanMap),
-    );
+    Get.toNamed(Routes.recommendPlanDetail, arguments: RecommendPlanModel.fromJson(recommendDatePlanMap));
   }
 
   /// @author 정준형
@@ -281,9 +268,7 @@ class RecommendPlanController extends GetxController {
     return openAiService.requestPlanRecommendResponse(
       weather:
           weatherData[selectedDate.value] != null
-              ? weatherService.extractEssentialWeatherInfo(
-                weatherData[selectedDate.value]!,
-              )
+              ? weatherService.extractEssentialWeatherInfo(weatherData[selectedDate.value]!)
               : null,
       address: addressSearchController.addressController.text,
       preferredDateType: selectedPreferredDateType.value.label,
@@ -301,18 +286,15 @@ class RecommendPlanController extends GetxController {
     AddressSearchController addressSearchController,
   ) async {
     List<Map<String, dynamic>> datePlaces =
-        (recommendDatePlanMap['date_places'] as List)
-            .map((e) => e as Map<String, dynamic>)
-            .toList();
+        (recommendDatePlanMap['date_places'] as List).map((e) => e as Map<String, dynamic>).toList();
 
     /// 카카오 api 로 조회한 장소 목록
     List<Map<String, dynamic>> detailPlaceInfoList = await Future.wait(
       datePlaces.map((place) async {
-        Map<String, dynamic> detailInfo = await kakaoLocalService
-            .getDetailPlaceInfoWithKeywordAndCategory(
-              place,
-              addressSearchController,
-            );
+        Map<String, dynamic> detailInfo = await kakaoLocalService.getDetailPlaceInfoWithKeywordAndCategory(
+          place,
+          addressSearchController,
+        );
 
         detailInfo['index'] = place['index'];
 
@@ -345,6 +327,33 @@ class RecommendPlanController extends GetxController {
   ///
   Map<String, dynamic> _getSampleRecommendDatePlan() {
     switch (selectedPreferredDateType.value) {
+      case PreferredDateType.chillCafeDate:
+        return {
+          "date_plan_title": "부산 북구 감성 카페 데이트",
+          "why_recommend_dating_plans":
+              "강한 비가 오는 날 실내에서 감성적인 시간을 보낼 수 있는 코스를 추천합니다. 맛집과 카페를 중심으로 한 데이트를 계획하여 편안하고 따뜻한 데이트를 즐길 수 있습니다.",
+          "date_places": [
+            {"index": 1, "keyword": "영화관", "category_code": "CT1"},
+            {"index": 2, "keyword": "커피", "category_code": "CE7"},
+            {"index": 3, "keyword": "디저트", "category_code": "FD6"},
+          ],
+        };
+      case PreferredDateType.gourmetTourDate:
+        return {
+          "date_plan_title": "부산 덕천동 실내 맛집 탐방 데이트",
+          "why_recommend_dating_plans": "부산 덕천동에서 흐린 날씨에 적합한 실내 맛집 및 문화시설을 중심으로 한 데이트 코스를 추천합니다.",
+          "date_places": [
+            {"index": 1, "keyword": "고기", "category_code": "FD6"},
+            {"index": 2, "keyword": "커피", "category_code": "CE7"},
+            {"index": 3, "keyword": "영화", "category_code": "CT1"},
+          ],
+        };
+      // case PreferredDateType.culturalDate:
+      //   break;
+      // case PreferredDateType.activeDate:
+      //   break;
+      // case PreferredDateType.healingDate:
+      //   break;
       default:
         return {
           "date_plan_title": "부산 북구 감성 카페 데이트",
