@@ -30,7 +30,9 @@ class HomeController extends GetxController {
   /// @since 2025. 4. 29.
   /// @comment
   ///
-  void onTapDateHistoryWriteBtn() {}
+  void onTapDateHistoryWriteBtn() {
+    Get.toNamed(Routes.datingHistoryEdit);
+  }
 
   /// @author 정준형
   /// @since 2025. 4. 29.

@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:image_picker/image_picker.dart';
 
 Widget buildCloseBtn(VoidCallback? onPressed) {
   return IconButton(
@@ -41,6 +44,10 @@ Widget buildNetworkImage({
     width: width,
     height: height,
     boxFit: boxFit,
+    shimmerBaseColor: Colors.grey.shade300,
+    shimmerHighlightColor: Colors.grey.shade100,
+    shimmerBackColor: Colors.white,
+
     errorWidget: defaultThumbnailImage(
       width: width,
       height: height,
@@ -61,9 +68,34 @@ Widget defaultThumbnailImage({
   bool isVideoThumbnail = false,
 }) {
   return Image.asset(
-    'assets/images/image/default_thumbnail_image.png',
+    'assets/images/icon/default_thumbnail_image_icon.png',
     width: width,
     height: height,
     fit: boxFit,
+  );
+}
+
+
+// ignore: slash_for_doc_comments
+/**
+ * @author JungJunHyung
+ * @since 2022/08/11
+ * @comment 파일 이미지 위젯
+ **/
+Widget buildFileImage({
+  double width = 80.0,
+  double height = 80.0,
+  required XFile file,
+  boxFit = BoxFit.cover,
+}) {
+  return Image.file(
+    File(file.path ?? ''),
+    width: width,
+    height: height,
+    fit: boxFit,
+    errorBuilder: (context, error, stackTrace) {
+      /// 에러시 이미지 변경 필요
+      return defaultThumbnailImage(width: width, height: height);
+    },
   );
 }

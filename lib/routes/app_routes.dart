@@ -18,11 +18,18 @@ abstract class Routes {
   /// 메인
   static const home = '/home';
 
-  /// 데이트 플랜 추천
+  /// 데이트 플랜
   static const recommendPlan = '/recommend_plan';
   static const recommendPlanDetail = '/recommend_plan_detail';
   static const recommendPlanEdit = '/recommend_plan_edit';
+  static const recommendPlanList = '/recommend_plan_list';
 
   /// 데이트 플랜 - 플레이스 관리
   static const placeSearch = '/place_search';
+
+  /// 데이트 기록
+  static const datingHistoryDetail = '/dating_history_detail';
+  static const datingHistoryEdit = '/dating_history_edit';
+  static const datingHistoryList = '/dating_history_list';
+
 }

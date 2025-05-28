@@ -17,7 +17,7 @@ T _$identity<T>(T value) => value;
 mixin _$RecommendPlanModel {
 
  String get id;// UUID
-@JsonKey(name: 'date_plan_title') String get title;@JsonKey(name: 'why_recommend_dating_plans') String get description;@JsonKey(name: 'date_places') List<PlaceModel> get places;@JsonKey(name: 'baseAddress') AddressModel get baseAddress;@TimestampConverterNotNull() DateTime get date;@TimestampConverterNotNull() DateTime get createdAt;@TimestampConverterNotNull() DateTime get modifiedAt;
+ String get userId;@JsonKey(name: 'date_plan_title') String get title;@JsonKey(name: 'why_recommend_dating_plans') String get description;@JsonKey(name: 'date_places') List<PlaceModel> get places; AddressModel get baseAddress;@TimestampConverterNotNull() DateTime get date;@TimestampConverterNotNull() DateTime get createdAt;@TimestampConverterNotNull() DateTime get modifiedAt;
 /// Create a copy of RecommendPlanModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,16 +30,16 @@ $RecommendPlanModelCopyWith<RecommendPlanModel> get copyWith => _$RecommendPlanM
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecommendPlanModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.places, places)&&(identical(other.baseAddress, baseAddress) || other.baseAddress == baseAddress)&&(identical(other.date, date) || other.date == date)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.modifiedAt, modifiedAt) || other.modifiedAt == modifiedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecommendPlanModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.places, places)&&(identical(other.baseAddress, baseAddress) || other.baseAddress == baseAddress)&&(identical(other.date, date) || other.date == date)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.modifiedAt, modifiedAt) || other.modifiedAt == modifiedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,const DeepCollectionEquality().hash(places),baseAddress,date,createdAt,modifiedAt);
+int get hashCode => Object.hash(runtimeType,id,userId,title,description,const DeepCollectionEquality().hash(places),baseAddress,date,createdAt,modifiedAt);
 
 @override
 String toString() {
-  return 'RecommendPlanModel(id: $id, title: $title, description: $description, places: $places, baseAddress: $baseAddress, date: $date, createdAt: $createdAt, modifiedAt: $modifiedAt)';
+  return 'RecommendPlanModel(id: $id, userId: $userId, title: $title, description: $description, places: $places, baseAddress: $baseAddress, date: $date, createdAt: $createdAt, modifiedAt: $modifiedAt)';
 }
 
 
@@ -50,7 +50,7 @@ abstract mixin class $RecommendPlanModelCopyWith<$Res>  {
   factory $RecommendPlanModelCopyWith(RecommendPlanModel value, $Res Function(RecommendPlanModel) _then) = _$RecommendPlanModelCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(name: 'date_plan_title') String title,@JsonKey(name: 'why_recommend_dating_plans') String description,@JsonKey(name: 'date_places') List<PlaceModel> places,@JsonKey(name: 'baseAddress') AddressModel baseAddress,@TimestampConverterNotNull() DateTime date,@TimestampConverterNotNull() DateTime createdAt,@TimestampConverterNotNull() DateTime modifiedAt
+ String id, String userId,@JsonKey(name: 'date_plan_title') String title,@JsonKey(name: 'why_recommend_dating_plans') String description,@JsonKey(name: 'date_places') List<PlaceModel> places, AddressModel baseAddress,@TimestampConverterNotNull() DateTime date,@TimestampConverterNotNull() DateTime createdAt,@TimestampConverterNotNull() DateTime modifiedAt
 });
 
 
@@ -67,9 +67,10 @@ class _$RecommendPlanModelCopyWithImpl<$Res>
 
 /// Create a copy of RecommendPlanModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? places = null,Object? baseAddress = null,Object? date = null,Object? createdAt = null,Object? modifiedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? title = null,Object? description = null,Object? places = null,Object? baseAddress = null,Object? date = null,Object? createdAt = null,Object? modifiedAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,places: null == places ? _self.places : places // ignore: cast_nullable_to_non_nullable
@@ -97,11 +98,12 @@ $AddressModelCopyWith<$Res> get baseAddress {
 
 @JsonSerializable(explicitToJson: true)
 class _RecommendPlanModel implements RecommendPlanModel {
-  const _RecommendPlanModel({required this.id, @JsonKey(name: 'date_plan_title') required this.title, @JsonKey(name: 'why_recommend_dating_plans') required this.description, @JsonKey(name: 'date_places') required final  List<PlaceModel> places, @JsonKey(name: 'baseAddress') required this.baseAddress, @TimestampConverterNotNull() required this.date, @TimestampConverterNotNull() required this.createdAt, @TimestampConverterNotNull() required this.modifiedAt}): _places = places;
+  const _RecommendPlanModel({required this.id, required this.userId, @JsonKey(name: 'date_plan_title') required this.title, @JsonKey(name: 'why_recommend_dating_plans') required this.description, @JsonKey(name: 'date_places') required final  List<PlaceModel> places, required this.baseAddress, @TimestampConverterNotNull() required this.date, @TimestampConverterNotNull() required this.createdAt, @TimestampConverterNotNull() required this.modifiedAt}): _places = places;
   factory _RecommendPlanModel.fromJson(Map<String, dynamic> json) => _$RecommendPlanModelFromJson(json);
 
 @override final  String id;
 // UUID
+@override final  String userId;
 @override@JsonKey(name: 'date_plan_title') final  String title;
 @override@JsonKey(name: 'why_recommend_dating_plans') final  String description;
  final  List<PlaceModel> _places;
@@ -111,7 +113,7 @@ class _RecommendPlanModel implements RecommendPlanModel {
   return EqualUnmodifiableListView(_places);
 }
 
-@override@JsonKey(name: 'baseAddress') final  AddressModel baseAddress;
+@override final  AddressModel baseAddress;
 @override@TimestampConverterNotNull() final  DateTime date;
 @override@TimestampConverterNotNull() final  DateTime createdAt;
 @override@TimestampConverterNotNull() final  DateTime modifiedAt;
@@ -129,16 +131,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RecommendPlanModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other._places, _places)&&(identical(other.baseAddress, baseAddress) || other.baseAddress == baseAddress)&&(identical(other.date, date) || other.date == date)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.modifiedAt, modifiedAt) || other.modifiedAt == modifiedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RecommendPlanModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other._places, _places)&&(identical(other.baseAddress, baseAddress) || other.baseAddress == baseAddress)&&(identical(other.date, date) || other.date == date)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.modifiedAt, modifiedAt) || other.modifiedAt == modifiedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,const DeepCollectionEquality().hash(_places),baseAddress,date,createdAt,modifiedAt);
+int get hashCode => Object.hash(runtimeType,id,userId,title,description,const DeepCollectionEquality().hash(_places),baseAddress,date,createdAt,modifiedAt);
 
 @override
 String toString() {
-  return 'RecommendPlanModel(id: $id, title: $title, description: $description, places: $places, baseAddress: $baseAddress, date: $date, createdAt: $createdAt, modifiedAt: $modifiedAt)';
+  return 'RecommendPlanModel(id: $id, userId: $userId, title: $title, description: $description, places: $places, baseAddress: $baseAddress, date: $date, createdAt: $createdAt, modifiedAt: $modifiedAt)';
 }
 
 
@@ -149,7 +151,7 @@ abstract mixin class _$RecommendPlanModelCopyWith<$Res> implements $RecommendPla
   factory _$RecommendPlanModelCopyWith(_RecommendPlanModel value, $Res Function(_RecommendPlanModel) _then) = __$RecommendPlanModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(name: 'date_plan_title') String title,@JsonKey(name: 'why_recommend_dating_plans') String description,@JsonKey(name: 'date_places') List<PlaceModel> places,@JsonKey(name: 'baseAddress') AddressModel baseAddress,@TimestampConverterNotNull() DateTime date,@TimestampConverterNotNull() DateTime createdAt,@TimestampConverterNotNull() DateTime modifiedAt
+ String id, String userId,@JsonKey(name: 'date_plan_title') String title,@JsonKey(name: 'why_recommend_dating_plans') String description,@JsonKey(name: 'date_places') List<PlaceModel> places, AddressModel baseAddress,@TimestampConverterNotNull() DateTime date,@TimestampConverterNotNull() DateTime createdAt,@TimestampConverterNotNull() DateTime modifiedAt
 });
 
 
@@ -166,9 +168,10 @@ class __$RecommendPlanModelCopyWithImpl<$Res>
 
 /// Create a copy of RecommendPlanModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? places = null,Object? baseAddress = null,Object? date = null,Object? createdAt = null,Object? modifiedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? title = null,Object? description = null,Object? places = null,Object? baseAddress = null,Object? date = null,Object? createdAt = null,Object? modifiedAt = null,}) {
   return _then(_RecommendPlanModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,places: null == places ? _self._places : places // ignore: cast_nullable_to_non_nullable

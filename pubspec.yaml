@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -57,7 +59,7 @@ dependencies:
   url_launcher: ^6.3.1
 
   # 시간 포맷팅
-  jiffy: ^6.4.3
+  jiffy: ^6.3.2
 
   # 로딩 인디케이터 (선택)
   flutter_spinkit: ^5.2.1
@@ -129,6 +131,17 @@ dependencies:
 
   # 여러 위젯 재정렬 가능 (Wrap, Column 등 유연하게)
   reorderables: ^0.6.0
+  image_picker: ^1.1.2
+  image_cropper: ^9.1.0
+  permission_handler: ^12.0.0+1
+  getwidget: ^6.0.0
+  video_compress: ^3.1.4
+  video_thumbnail: ^0.5.6
+  flutter_image_compress: ^2.4.0
+  synchronized: ^3.3.1
+  smooth_page_indicator: ^1.2.1
+  flutter_animate: ^4.5.2
+  video_player: ^2.9.5
 
 dev_dependencies:
   flutter_test:
@@ -161,7 +174,11 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/common/
     - assets/images/address/
+    - assets/images/recommend_date_plan/
+    - assets/images/community/
+    - assets/images/dating_history/
     - assets/images/icon/
     - assets/images/app/
     - assets/images/logo/
