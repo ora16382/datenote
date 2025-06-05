@@ -13,8 +13,8 @@ abstract class AddressModel with _$AddressModel {
     required String addressName, // 사용자가 설정한 주소 이름 (예: 집, 회사)
     required double latitude,
     required double longitude,
-    @TimestampConverterNotNull() required DateTime createdAt,
-    @TimestampConverterNotNull() required DateTime orderDate, // 사용자가 선택한 데이트 날짜
+    @TimestampConverter() required DateTime createdAt,
+    @TimestampConverter() required DateTime orderDate, // 사용자가 선택한 데이트 날짜
   }) = _AddressModel;
 
   factory AddressModel.fromJson(Map<String, dynamic> json) => _$AddressModelFromJson(json);

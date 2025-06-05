@@ -31,30 +31,27 @@ _DatingHistoryModel _$DatingHistoryModelFromJson(Map<String, dynamic> json) =>
       tags:
           (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
           const [],
-      createdAt: const TimestampConverterNotNull().fromJson(json['createdAt']),
-      modifiedAt: const TimestampConverterNotNull().fromJson(
-        json['modifiedAt'],
-      ),
-      date: const TimestampConverterNotNull().fromJson(json['date']),
+      createdAt: const TimestampConverter().fromJson(json['createdAt']),
+      modifiedAt: const TimestampConverter().fromJson(json['modifiedAt']),
+      date: const TimestampConverter().fromJson(json['date']),
     );
 
-Map<String, dynamic> _$DatingHistoryModelToJson(
-  _DatingHistoryModel instance,
-) => <String, dynamic>{
-  'id': instance.id,
-  'userId': instance.userId,
-  'description': instance.description,
-  'recommendPlanId': instance.recommendPlanId,
-  'mood': _$MoodTypeEnumMap[instance.mood]!,
-  'isOpenToCommunity': instance.isOpenToCommunity,
-  'user': instance.user?.toJson(),
-  'likesUserId': instance.likesUserId,
-  'assets': instance.assets.map((e) => e.toJson()).toList(),
-  'tags': instance.tags,
-  'createdAt': const TimestampConverterNotNull().toJson(instance.createdAt),
-  'modifiedAt': const TimestampConverterNotNull().toJson(instance.modifiedAt),
-  'date': const TimestampConverterNotNull().toJson(instance.date),
-};
+Map<String, dynamic> _$DatingHistoryModelToJson(_DatingHistoryModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'userId': instance.userId,
+      'description': instance.description,
+      'recommendPlanId': instance.recommendPlanId,
+      'mood': _$MoodTypeEnumMap[instance.mood]!,
+      'isOpenToCommunity': instance.isOpenToCommunity,
+      'user': instance.user?.toJson(),
+      'likesUserId': instance.likesUserId,
+      'assets': instance.assets.map((e) => e.toJson()).toList(),
+      'tags': instance.tags,
+      'createdAt': const TimestampConverter().toJson(instance.createdAt),
+      'modifiedAt': const TimestampConverter().toJson(instance.modifiedAt),
+      'date': const TimestampConverter().toJson(instance.date),
+    };
 
 const _$MoodTypeEnumMap = {
   MoodType.happy: 'happy',

@@ -14,8 +14,8 @@ _AddressModel _$AddressModelFromJson(Map<String, dynamic> json) =>
       addressName: json['addressName'] as String,
       latitude: (json['latitude'] as num).toDouble(),
       longitude: (json['longitude'] as num).toDouble(),
-      createdAt: const TimestampConverterNotNull().fromJson(json['createdAt']),
-      orderDate: const TimestampConverterNotNull().fromJson(json['orderDate']),
+      createdAt: const TimestampConverter().fromJson(json['createdAt']),
+      orderDate: const TimestampConverter().fromJson(json['orderDate']),
     );
 
 Map<String, dynamic> _$AddressModelToJson(_AddressModel instance) =>
@@ -26,6 +26,6 @@ Map<String, dynamic> _$AddressModelToJson(_AddressModel instance) =>
       'addressName': instance.addressName,
       'latitude': instance.latitude,
       'longitude': instance.longitude,
-      'createdAt': const TimestampConverterNotNull().toJson(instance.createdAt),
-      'orderDate': const TimestampConverterNotNull().toJson(instance.orderDate),
+      'createdAt': const TimestampConverter().toJson(instance.createdAt),
+      'orderDate': const TimestampConverter().toJson(instance.orderDate),
     };

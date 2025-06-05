@@ -6,6 +6,7 @@ import 'package:datenote/constant/enum/gender.dart';
 import 'package:datenote/constant/enum/region.dart';
 import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/constant/config/fire_store_collection_name.dart';
+import 'package:datenote/util/mixin/controller_loading_mix.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:datenote/util/widget/dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,7 +14,7 @@ import 'package:get/get.dart';
 
 import '../../../main.dart';
 
-class CollectingInformationController extends GetxController {
+class CollectingInformationController extends GetxController with ControllerLoadingMix{
   final userCtrl = Get.find<UserController>();
 
   /// 수정 모드 여부
@@ -33,9 +34,6 @@ class CollectingInformationController extends GetxController {
   RxList<DateStyle> dateStyleList = <DateStyle>[].obs;
 
   Rxn<Region> region = Rxn();
-
-  /// 로딩 스핀 위젯 표시 상태
-  bool isLoadingProgress = false;
 
   bool get isDateStyleListSelected => dateStyleList.isNotEmpty;
 
@@ -61,8 +59,7 @@ class CollectingInformationController extends GetxController {
     /// 마지막 페이지일 경우
     if (collectingInformationPage.value ==
         CollectingInformationPage.values.last) {
-      isLoadingProgress = true;
-      update([':loading']);
+      startLoading();
 
       final uid = FirebaseAuth.instance.currentUser?.uid;
 
@@ -82,8 +79,7 @@ class CollectingInformationController extends GetxController {
       } catch (e) {
         showToast('추가 정보 업데이트 도중 오류가 발생하였습니다 잠시 후 다시 시도해주세요.');
       } finally {
-        isLoadingProgress = false;
-        update([':loading']);
+        endLoading();
       }
 
     } else {

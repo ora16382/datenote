@@ -33,7 +33,8 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.background,
-      padding: const EdgeInsets.all(20.0),
+      margin: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: ListView(
         children: [
           _buildWeatherWidget(),
@@ -269,11 +270,7 @@ class _MainViewState extends State<MainView> {
           onDaySelected: controller.onDaySelected,
 
           /// 포맷 변경 콜백
-          // onFormatChanged: (format) {
-          //   setState(() {
-          //     controller.calendarFormat = format;
-          //   });
-          // },
+          onFormatChanged: controller.onFormatChanged,
 
           /// 캘린더 스타일
           calendarStyle: const CalendarStyle(
@@ -292,7 +289,7 @@ class _MainViewState extends State<MainView> {
 
           /// 캘린더 상단 포맷 버튼 비활성화
           headerStyle: const HeaderStyle(
-            formatButtonVisible: false,
+            formatButtonVisible: true,
             titleCentered: true,
             leftChevronVisible: false,
             rightChevronVisible: false,
@@ -307,7 +304,7 @@ class _MainViewState extends State<MainView> {
           calendarBuilders: CalendarBuilders(
             dowBuilder: _buildCalendarDowBuilder,
             headerTitleBuilder: _buildHeaderTitleBuilder,
-            // outsideBuilder: _buildDefaultBuilder,
+            outsideBuilder: _buildDefaultBuilder,
             defaultBuilder: _buildDefaultBuilder,
             selectedBuilder: _buildDefaultBuilder,
             todayBuilder: _buildDefaultBuilder,
@@ -398,10 +395,7 @@ class _MainViewState extends State<MainView> {
           top: 4,
           child: Builder(
             builder: (context) {
-              DateTime now = Jiffy.now().dateTime;
-              bool isSameMonth = now.year == controller.focusedDay.year && now.month == controller.focusedDay.month;
-
-              if (isSameMonth) {
+              if (isSameDay(controller.selectedDay, DateTime.now())) {
                 return const SizedBox();
               } else {
                 return GestureDetector(
@@ -668,26 +662,29 @@ class _MainViewState extends State<MainView> {
                   ),
                 ),
                 if (history.assets.isNotEmpty)
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        buildNetworkImage(
-                          imagePath:
-                              history.assets.first.type == AssetType.video
-                                  ? history.assets.first.thumbnailUrl ?? ''
-                                  : history.assets.first.url ?? '',
-                          width: 100,
-                          height: 100,
-                        ),
-                        if (history.assets.first.type == AssetType.video)
-                          Positioned(
-                            bottom: -2,
-                            right: 2,
-                            child: Icon(Icons.videocam, color: AppColors.primary, size: 32),
+                  Container(
+                    margin: const EdgeInsets.only(left: 4.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          buildNetworkImage(
+                            imagePath:
+                                history.assets.first.type == AssetType.video
+                                    ? history.assets.first.thumbnailUrl ?? ''
+                                    : history.assets.first.url ?? '',
+                            width: 100,
+                            height: 100,
                           ),
-                      ],
+                          if (history.assets.first.type == AssetType.video)
+                            Positioned(
+                              bottom: -2,
+                              right: 2,
+                              child: Icon(Icons.videocam, color: AppColors.primary, size: 32),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
               ],

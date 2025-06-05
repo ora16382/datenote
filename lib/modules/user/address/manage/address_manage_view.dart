@@ -2,6 +2,7 @@ import 'package:datenote/main.dart';
 import 'package:datenote/models/address/address_model.dart';
 import 'package:datenote/modules/user/address/manage/address_manage_controller.dart';
 import 'package:datenote/util/app_color.dart';
+import 'package:datenote/util/widget/common_loading_indicator_widget.dart';
 import 'package:datenote/util/widget/common_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -129,16 +130,7 @@ class _AddressManageViewState extends State<AddressManageView> with SingleTicker
               },
             ),
           ),
-          GetBuilder<AddressManageController>(
-            id: ':loading',
-            builder: (ctrl) {
-              if (!ctrl.isLoadingProgress) {
-                return const SizedBox();
-              } else {
-                return Center(child: SpinKitFadingCircle(color: AppColors.primary, size: 50.0));
-              }
-            },
-          ),
+          CommonLoadingIndicator<AddressManageController>()
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(

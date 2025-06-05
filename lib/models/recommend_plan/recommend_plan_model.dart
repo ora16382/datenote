@@ -19,9 +19,9 @@ abstract class RecommendPlanModel with _$RecommendPlanModel {
     @JsonKey(name: 'why_recommend_dating_plans') required String description,
     @JsonKey(name: 'date_places') required List<PlaceModel> places,
     required AddressModel baseAddress,
-    @TimestampConverterNotNull() required DateTime date,
-    @TimestampConverterNotNull() required DateTime createdAt,
-    @TimestampConverterNotNull() required DateTime modifiedAt,
+    @TimestampConverter() required DateTime date,
+    @TimestampConverter() required DateTime createdAt,
+    @TimestampConverter() required DateTime modifiedAt,
   }) = _RecommendPlanModel;
 
   factory RecommendPlanModel.fromJson(Map<String, dynamic> json) =>

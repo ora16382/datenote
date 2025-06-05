@@ -14,7 +14,7 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   gender: genderFromJson(json['gender'] as String?),
   dateStyle: dateStyleFromJson(json['dateStyle'] as List?),
   region: regionFromJson(json['region'] as String?),
-  createdAt: const TimestampConverterNotNull().fromJson(json['createdAt']),
+  createdAt: const TimestampConverter().fromJson(json['createdAt']),
 );
 
 Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
@@ -26,5 +26,5 @@ Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
       'gender': genderToJson(instance.gender),
       'dateStyle': dateStyleToJson(instance.dateStyle),
       'region': regionToJson(instance.region),
-      'createdAt': const TimestampConverterNotNull().toJson(instance.createdAt),
+      'createdAt': const TimestampConverter().toJson(instance.createdAt),
     };

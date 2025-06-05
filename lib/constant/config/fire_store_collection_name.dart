@@ -4,4 +4,5 @@ class FireStoreCollectionName {
   static const String addresses = 'addresses';
   static const String recommendDatePlan = 'recommendDatePlan';
   static const String datingHistory = 'datingHistory';
+  static const String comment = 'comment';
 }

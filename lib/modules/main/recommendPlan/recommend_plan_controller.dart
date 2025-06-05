@@ -3,6 +3,7 @@ import 'package:datenote/constant/enum/preferred_date_type.dart';
 import 'package:datenote/constant/enum/recommend_plan_step_type.dart';
 import 'package:datenote/main.dart';
 import 'package:datenote/models/address/address_model.dart';
+import 'package:datenote/models/place/place_model.dart';
 import 'package:datenote/models/recommend_plan/recommend_plan_model.dart';
 import 'package:datenote/modules/main/main_controller.dart';
 import 'package:datenote/modules/user/address/search/address_search_controller.dart';
@@ -289,7 +290,7 @@ class RecommendPlanController extends GetxController {
         (recommendDatePlanMap['date_places'] as List).map((e) => e as Map<String, dynamic>).toList();
 
     /// 카카오 api 로 조회한 장소 목록
-    List<Map<String, dynamic>> detailPlaceInfoList = await Future.wait(
+    List<PlaceModel> detailPlaceInfoList = await Future.wait(
       datePlaces.map((place) async {
         Map<String, dynamic> detailInfo = await kakaoLocalService.getDetailPlaceInfoWithKeywordAndCategory(
           place,
@@ -298,27 +299,21 @@ class RecommendPlanController extends GetxController {
 
         detailInfo['index'] = place['index'];
 
-        return Future.value(detailInfo);
+        return Future.value(PlaceModel.fromJson(detailInfo));
       }),
     );
 
-    Map<int, Map<String, dynamic>> detailPlaceInfoMap = {};
+    Map<int, PlaceModel> detailPlaceInfoMap = {};
 
     for (var detailPlaceInfo in detailPlaceInfoList) {
-      detailPlaceInfoMap[detailPlaceInfo['index']!] = detailPlaceInfo;
+      detailPlaceInfoMap[detailPlaceInfo.index ?? -1] = detailPlaceInfo;
     }
 
-    /// 상세 정보가 있는 정보로 데이터 바꾸기
-    datePlaces =
-        datePlaces.map<Map<String, dynamic>>((e) {
-          return detailPlaceInfoMap[e['index']] ?? {'noResult': true};
-        }).toList();
 
-    /// 검색 결과가 없는 장소는 제외
+
+    /// 상세 정보가 있는 정보로 데이터 바꾸기, 검색 결과가 없는 장소는 제외
     recommendDatePlanMap['date_places'] =
-        datePlaces.where((element) {
-          return element['noResult'] != true;
-        }).toList();
+        datePlaces.map<PlaceModel?>((e) => detailPlaceInfoMap[e['index']],).whereType<PlaceModel>();
   }
 
   /// @author 정준형
