@@ -2,7 +2,7 @@
 import 'package:datenote/modules/home/home_view.dart';
 import 'package:datenote/modules/main/dating_history/detail/dating_history_detail_view.dart';
 import 'package:datenote/modules/main/dating_history/edit/dating_history_edit_view.dart';
-import 'package:datenote/modules/main/dating_history/list%20/dating_history_list_view.dart';
+import 'package:datenote/modules/main/dating_history/list/dating_history_list_view.dart';
 import 'package:datenote/modules/main/recommendPlan/detail/recommend_plan_detail_view.dart';
 import 'package:datenote/modules/main/recommendPlan/edit/recommend_plan_edit_view.dart';
 import 'package:datenote/modules/main/recommendPlan/list/recommend_plan_list_view.dart';
