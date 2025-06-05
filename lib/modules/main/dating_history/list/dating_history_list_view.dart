@@ -3,7 +3,7 @@ import 'package:datenote/main.dart';
 import 'package:datenote/models/address/address_model.dart';
 import 'package:datenote/models/dating_history/dating_history_model.dart';
 import 'package:datenote/models/recommend_plan/recommend_plan_model.dart';
-import 'package:datenote/modules/main/dating_history/list%20/dating_history_list_controller.dart';
+import 'package:datenote/modules/main/dating_history/list/dating_history_list_controller.dart';
 import 'package:datenote/modules/main/recommendPlan/list/recommend_plan_list_controller.dart';
 import 'package:datenote/modules/user/address/manage/address_manage_controller.dart';
 import 'package:datenote/util/app_color.dart';
