@@ -35,6 +35,7 @@ class CommunityController extends GetxController with ControllerLoadingMix {
   /// lastDocumentSnapshot 가 삭제되었을 경우를 대비해 그 이전의 데이터를 임시 저장한다.
   List<DocumentSnapshot> lastDocumentSnapshotList = [];
 
+  /// 사용자 데이터 Map
   final Map<String, UserModel> userMap = {};
 
   /// firestore 리스너 객체
@@ -72,7 +73,7 @@ class CommunityController extends GetxController with ControllerLoadingMix {
         /// 그냥 date 로 정렬해도 같은 데이트 날짜의 추천 플랜은 추가한 순서대로 불러올 것이다.
         .orderBy('createdAt', descending: true)
         .snapshots()
-        .listen((snapshot) {
+        .listen((snapshot) async {
           if (_isFirstSnapshot) {
             _isFirstSnapshot = false;
             return; // 최초 이벤트 무시
@@ -114,7 +115,28 @@ class CommunityController extends GetxController with ControllerLoadingMix {
                       containPage = page;
                       findDatingHistoryModel = datingHistoryModel.$2;
 
-                      page[datingHistoryModel.$1] = DatingHistoryModel.fromJson(data);
+                      DatingHistoryModel datingHistoryModelObj = DatingHistoryModel.fromJson(data);
+
+                      /// 조회한적 없는 userId 리스트 추출
+                      if (!userMap.containsKey(datingHistoryModelObj.userId)) {
+                        /// 각 데이터별 사용자 정보 불러오기
+                        /// userId in 조건으로 사용자 데이터 일괄 조회
+                        final userSnapshot =
+                            await FirebaseFirestore.instance
+                                .collection(FireStoreCollectionName.users)
+                                .where('uid', isEqualTo: datingHistoryModelObj.userId)
+                                .get();
+
+                        /// 사용자 uid → UserModel 매핑
+                        for (var doc in userSnapshot.docs) {
+                          userMap.putIfAbsent(doc['uid'], () => UserModel.fromJson(doc.data()));
+                        }
+                      }
+
+                      page[datingHistoryModel.$1] = datingHistoryModelObj.copyWith(
+                        user: userMap[datingHistoryModelObj.userId],
+                      );
+
                       break outerLoop;
                     }
                   }
@@ -201,8 +223,9 @@ class CommunityController extends GetxController with ControllerLoadingMix {
           return _fetchPage(pageKey, retryCount: retryCount);
         } else {
           showToast('삭제된 데이터가 있어 페이지를 새로고침 합니다.');
+
           /// 고의적으로 딜레이를 넣어준다.
-          Future.delayed(Duration(seconds: 1), () => onRefresh(),);
+          Future.delayed(Duration(seconds: 1), () => onRefresh());
           return [];
         }
       }
@@ -233,17 +256,22 @@ class CommunityController extends GetxController with ControllerLoadingMix {
     final userIds = items.map((e) => e.userId).where((id) => !userMap.containsKey(id)).toSet().toList();
 
     if (userIds.isNotEmpty) {
-      /// 각 데이터별 사용자 정보 불러오기
-      /// userId in 조건으로 사용자 데이터 일괄 조회
-      final userSnapshot =
-          await FirebaseFirestore.instance
-              .collection(FireStoreCollectionName.users)
-              .where('uid', whereIn: userIds)
-              .get();
+      /// whereIn 30개 넘어가면 에러가 뜨니 배치처리한다.
+      for (int i = 0; i < userIds.length; i += 30) {
+        final batch = userIds.sublist(i, (i + 30).clamp(0, userIds.length));
 
-      /// 사용자 uid → UserModel 매핑
-      for (var doc in userSnapshot.docs) {
-        userMap.putIfAbsent(doc['uid'], () => UserModel.fromJson(doc.data()));
+        /// 각 데이터별 사용자 정보 불러오기
+        /// userId in 조건으로 사용자 데이터 일괄 조회
+        final userSnapshot =
+            await FirebaseFirestore.instance
+                .collection(FireStoreCollectionName.users)
+                .where('uid', whereIn: batch)
+                .get();
+
+        /// 사용자 uid → UserModel 매핑
+        for (var doc in userSnapshot.docs) {
+          userMap.putIfAbsent(doc['uid'], () => UserModel.fromJson(doc.data()));
+        }
       }
 
       items =
@@ -312,6 +340,7 @@ class CommunityController extends GetxController with ControllerLoadingMix {
         });
       });
     } catch (e) {
+      logger.e(e);
       favoriteLoadingProgressMap[datingHistoryModel.id] = false;
       update([':favorite:datingHistoryItem:${datingHistoryModel.id}']);
 

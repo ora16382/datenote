@@ -1,6 +1,7 @@
 import 'package:datenote/main.dart';
 import 'package:datenote/modules/user/address/search/address_search_controller.dart';
 import 'package:datenote/util/app_color.dart';
+import 'package:datenote/util/widget/common_loading_indicator_widget.dart';
 import 'package:datenote/util/widget/common_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -184,21 +185,7 @@ class AddressSearchView extends StatelessWidget {
                 ],
               ),
             ),
-            GetBuilder<AddressSearchController>(
-              id: ':loading',
-              builder: (ctrl) {
-                if (!ctrl.isLoadingProgress) {
-                  return const SizedBox();
-                } else {
-                  return Center(
-                    child: SpinKitFadingCircle(
-                      color: AppColors.primary,
-                      size: 50.0,
-                    ),
-                  );
-                }
-              },
-            ),
+            CommonLoadingIndicator<AddressSearchController>()
           ],
         ),
       ),

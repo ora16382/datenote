@@ -9,6 +9,7 @@ import 'package:datenote/constant/enum/gender.dart';
 import 'package:datenote/constant/enum/region.dart';
 import 'package:datenote/modules/user/collecting_infomation/collecting_information_controller.dart';
 import 'package:datenote/util/app_color.dart';
+import 'package:datenote/util/widget/common_loading_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -146,18 +147,7 @@ class _CollectingInformationViewState extends State<CollectingInformationView> {
             }),
           ],
         ),
-        GetBuilder<CollectingInformationController>(
-          id: ':loading',
-          builder: (ctrl) {
-            if (!ctrl.isLoadingProgress) {
-              return const SizedBox();
-            } else {
-              return Center(
-                child: SpinKitFadingCircle(color: AppColors.primary, size: 50.0),
-              );
-            }
-          },
-        ),
+        CommonLoadingIndicator<CollectingInformationController>(),
       ],
     );
   }

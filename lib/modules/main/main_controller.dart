@@ -10,6 +10,7 @@ import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
 import 'package:datenote/services/weather_service.dart';
 import 'package:datenote/util/functions/common_functions.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:jiffy/jiffy.dart';
@@ -45,7 +46,7 @@ class MainController extends GetxController {
   /// ======================== ///
 
   /// 캘린더 포맷
-  CalendarFormat calendarFormat = CalendarFormat.month;
+  CalendarFormat calendarFormat = CalendarFormat.twoWeeks;
 
   /// 포커스 기준이 되는 날짜
   DateTime focusedDay = Jiffy.now().dateTime;
@@ -291,7 +292,16 @@ class MainController extends GetxController {
   /// @comment calendar 이전달 클릭 콜백
   ///
   void onTapLeftChevron() {
-    onCalendarPageChanged(DateTime(focusedDay.year, focusedDay.month - 1), isUpdateCalendar: true);
+    DateTime previousDateTime;
+    if(calendarFormat == CalendarFormat.month) {
+      previousDateTime = DateTime(focusedDay.year, focusedDay.month - 1);
+    } else if(calendarFormat == CalendarFormat.twoWeeks){
+      previousDateTime = DateTime(focusedDay.year, focusedDay.month, focusedDay.day - 14);
+    } else {
+      previousDateTime = DateTime(focusedDay.year, focusedDay.month, focusedDay.day - 7);
+    }
+
+    onCalendarPageChanged(previousDateTime, isUpdateCalendar: true);
   }
 
   /// @author 정준형
@@ -299,7 +309,16 @@ class MainController extends GetxController {
   /// @comment calendar 다음달 클릭 콜백
   ///
   void onTapRightChevron() {
-    onCalendarPageChanged(DateTime(focusedDay.year, focusedDay.month + 1), isUpdateCalendar: true);
+    DateTime nextDateTime;
+    if(calendarFormat == CalendarFormat.month) {
+      nextDateTime = DateTime(focusedDay.year, focusedDay.month + 1);
+    } else if(calendarFormat == CalendarFormat.twoWeeks){
+      nextDateTime = DateTime(focusedDay.year, focusedDay.month, focusedDay.day + 14);
+    } else {
+      nextDateTime = DateTime(focusedDay.year, focusedDay.month, focusedDay.day + 7);
+    }
+
+    onCalendarPageChanged(nextDateTime, isUpdateCalendar: true);
   }
 
   /// @author 정준형
@@ -333,5 +352,10 @@ class MainController extends GetxController {
   void onTapDatingHistory(DatingHistoryModel datingHistoryModel) {
     /// 5. 상세보기로 진입하기
     Get.toNamed(Routes.datingHistoryDetail, arguments: datingHistoryModel);
+  }
+
+  void onFormatChanged(CalendarFormat format) {
+    calendarFormat = format;
+    update([':calendar']);
   }
 }

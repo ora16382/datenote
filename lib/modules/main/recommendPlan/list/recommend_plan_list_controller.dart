@@ -8,6 +8,7 @@ import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
 import 'package:datenote/constant/config/fire_store_collection_name.dart';
 import 'package:datenote/util/functions/common_functions.dart';
+import 'package:datenote/util/mixin/controller_loading_mix.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:datenote/util/widget/dialog.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -19,7 +20,7 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../main.dart';
 
-class RecommendPlanListController extends GetxController {
+class RecommendPlanListController extends GetxController with ControllerLoadingMix {
   /// 선택모드 여부(데이트 기록 작성에서 사용)
   final isSelectMode = Get.parameters['isSelectMode'] == 'true';
 
@@ -40,9 +41,6 @@ class RecommendPlanListController extends GetxController {
   /// Firestore의 snapshots()는 앱에서 listen이 연결될 때마다 전체 데이터에 대해 최초로 한 번 added 이벤트를 전부 보냄.
   /// 최초 구독 이벤트 무시하기위한 플래그
   bool _isFirstSnapshot = true;
-
-  /// 로딩 스핀 위젯 표시 상태
-  bool isLoadingProgress = false;
 
   /// 현재 조회한 날짜 리스트
   HashSet<DateTime> selectedDateList = HashSet(

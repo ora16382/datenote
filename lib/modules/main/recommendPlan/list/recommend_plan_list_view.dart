@@ -3,6 +3,7 @@ import 'package:datenote/models/recommend_plan/recommend_plan_model.dart';
 import 'package:datenote/modules/main/recommendPlan/list/recommend_plan_list_controller.dart';
 import 'package:datenote/modules/user/address/manage/address_manage_controller.dart';
 import 'package:datenote/util/app_color.dart';
+import 'package:datenote/util/widget/common_loading_indicator_widget.dart';
 import 'package:datenote/util/widget/common_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,8 +47,8 @@ class _RecommendPlanListViewState extends State<RecommendPlanListView> {
       body: Stack(
         children: [
           Container(
-            margin: const EdgeInsets.only(bottom: 48),
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+            // margin: const EdgeInsets.only(bottom: 48),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: GetBuilder<RecommendPlanListController>(
               id: ':recommendPlanList',
               builder: (_) {
@@ -112,16 +113,7 @@ class _RecommendPlanListViewState extends State<RecommendPlanListView> {
               },
             ),
           ),
-          GetBuilder<RecommendPlanListController>(
-            id: ':loading',
-            builder: (ctrl) {
-              if (!ctrl.isLoadingProgress) {
-                return const SizedBox();
-              } else {
-                return Center(child: SpinKitFadingCircle(color: AppColors.primary, size: 50.0));
-              }
-            },
-          ),
+          CommonLoadingIndicator<RecommendPlanListController>(),
         ],
       ),
       floatingActionButton:
