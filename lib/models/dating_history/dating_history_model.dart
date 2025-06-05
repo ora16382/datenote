@@ -25,9 +25,9 @@ abstract class DatingHistoryModel with _$DatingHistoryModel {
     @Default([]) List<String> likesUserId,
     @Default([]) List<AssetModel> assets,
     @Default([]) List<String> tags,
-    @TimestampConverterNotNull() required DateTime createdAt,
-    @TimestampConverterNotNull() required DateTime modifiedAt,
-    @TimestampConverterNotNull() required DateTime date,
+    @TimestampConverter() required DateTime createdAt,
+    @TimestampConverter() required DateTime modifiedAt,
+    @TimestampConverter() required DateTime date,
   }) = _DatingHistoryModel;
 
   factory DatingHistoryModel.fromJson(Map<String, dynamic> json) => _$DatingHistoryModelFromJson(json);

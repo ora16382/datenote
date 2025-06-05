@@ -18,7 +18,7 @@ mixin _$AssetModel {
 
  String get id; String? get url;/// 기본적으로 enum은 json_serializable에서 자동 직렬화/역직렬화가 된다.
 /// enum을 커스텀 문자열로 매핑하고 싶다면 → @JsonKey(fromJson: ..., toJson: ...)으로 명시해줘야 한다.
- AssetType get type;@TimestampConverterNotNull() DateTime get createdAt; String? get thumbnailUrl;
+ AssetType get type;@TimestampConverter() DateTime get createdAt; String? get thumbnailUrl;
 /// Create a copy of AssetModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -51,7 +51,7 @@ abstract mixin class $AssetModelCopyWith<$Res>  {
   factory $AssetModelCopyWith(AssetModel value, $Res Function(AssetModel) _then) = _$AssetModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String? url, AssetType type,@TimestampConverterNotNull() DateTime createdAt, String? thumbnailUrl
+ String id, String? url, AssetType type,@TimestampConverter() DateTime createdAt, String? thumbnailUrl
 });
 
 
@@ -86,7 +86,7 @@ as String?,
 @JsonSerializable()
 
 class _AssetModel implements AssetModel {
-  const _AssetModel({required this.id, this.url, required this.type, @TimestampConverterNotNull() required this.createdAt, this.thumbnailUrl});
+  const _AssetModel({required this.id, this.url, required this.type, @TimestampConverter() required this.createdAt, this.thumbnailUrl});
   factory _AssetModel.fromJson(Map<String, dynamic> json) => _$AssetModelFromJson(json);
 
 @override final  String id;
@@ -94,7 +94,7 @@ class _AssetModel implements AssetModel {
 /// 기본적으로 enum은 json_serializable에서 자동 직렬화/역직렬화가 된다.
 /// enum을 커스텀 문자열로 매핑하고 싶다면 → @JsonKey(fromJson: ..., toJson: ...)으로 명시해줘야 한다.
 @override final  AssetType type;
-@override@TimestampConverterNotNull() final  DateTime createdAt;
+@override@TimestampConverter() final  DateTime createdAt;
 @override final  String? thumbnailUrl;
 
 /// Create a copy of AssetModel
@@ -130,7 +130,7 @@ abstract mixin class _$AssetModelCopyWith<$Res> implements $AssetModelCopyWith<$
   factory _$AssetModelCopyWith(_AssetModel value, $Res Function(_AssetModel) _then) = __$AssetModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String? url, AssetType type,@TimestampConverterNotNull() DateTime createdAt, String? thumbnailUrl
+ String id, String? url, AssetType type,@TimestampConverter() DateTime createdAt, String? thumbnailUrl
 });
 
 

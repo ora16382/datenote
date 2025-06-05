@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DatingHistoryModel {
 
- String get id; String get userId; String get description; String? get recommendPlanId; MoodType get mood; bool get isOpenToCommunity; UserModel? get user; List<String> get likesUserId; List<AssetModel> get assets; List<String> get tags;@TimestampConverterNotNull() DateTime get createdAt;@TimestampConverterNotNull() DateTime get modifiedAt;@TimestampConverterNotNull() DateTime get date;
+ String get id; String get userId; String get description; String? get recommendPlanId; MoodType get mood; bool get isOpenToCommunity; UserModel? get user; List<String> get likesUserId; List<AssetModel> get assets; List<String> get tags;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime get modifiedAt;@TimestampConverter() DateTime get date;
 /// Create a copy of DatingHistoryModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,7 +49,7 @@ abstract mixin class $DatingHistoryModelCopyWith<$Res>  {
   factory $DatingHistoryModelCopyWith(DatingHistoryModel value, $Res Function(DatingHistoryModel) _then) = _$DatingHistoryModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String userId, String description, String? recommendPlanId, MoodType mood, bool isOpenToCommunity, UserModel? user, List<String> likesUserId, List<AssetModel> assets, List<String> tags,@TimestampConverterNotNull() DateTime createdAt,@TimestampConverterNotNull() DateTime modifiedAt,@TimestampConverterNotNull() DateTime date
+ String id, String userId, String description, String? recommendPlanId, MoodType mood, bool isOpenToCommunity, UserModel? user, List<String> likesUserId, List<AssetModel> assets, List<String> tags,@TimestampConverter() DateTime createdAt,@TimestampConverter() DateTime modifiedAt,@TimestampConverter() DateTime date
 });
 
 
@@ -104,7 +104,7 @@ $UserModelCopyWith<$Res>? get user {
 
 @JsonSerializable(explicitToJson: true)
 class _DatingHistoryModel implements DatingHistoryModel {
-  const _DatingHistoryModel({required this.id, required this.userId, required this.description, this.recommendPlanId, required this.mood, required this.isOpenToCommunity, this.user, final  List<String> likesUserId = const [], final  List<AssetModel> assets = const [], final  List<String> tags = const [], @TimestampConverterNotNull() required this.createdAt, @TimestampConverterNotNull() required this.modifiedAt, @TimestampConverterNotNull() required this.date}): _likesUserId = likesUserId,_assets = assets,_tags = tags;
+  const _DatingHistoryModel({required this.id, required this.userId, required this.description, this.recommendPlanId, required this.mood, required this.isOpenToCommunity, this.user, final  List<String> likesUserId = const [], final  List<AssetModel> assets = const [], final  List<String> tags = const [], @TimestampConverter() required this.createdAt, @TimestampConverter() required this.modifiedAt, @TimestampConverter() required this.date}): _likesUserId = likesUserId,_assets = assets,_tags = tags;
   factory _DatingHistoryModel.fromJson(Map<String, dynamic> json) => _$DatingHistoryModelFromJson(json);
 
 @override final  String id;
@@ -135,9 +135,9 @@ class _DatingHistoryModel implements DatingHistoryModel {
   return EqualUnmodifiableListView(_tags);
 }
 
-@override@TimestampConverterNotNull() final  DateTime createdAt;
-@override@TimestampConverterNotNull() final  DateTime modifiedAt;
-@override@TimestampConverterNotNull() final  DateTime date;
+@override@TimestampConverter() final  DateTime createdAt;
+@override@TimestampConverter() final  DateTime modifiedAt;
+@override@TimestampConverter() final  DateTime date;
 
 /// Create a copy of DatingHistoryModel
 /// with the given fields replaced by the non-null parameter values.
@@ -172,7 +172,7 @@ abstract mixin class _$DatingHistoryModelCopyWith<$Res> implements $DatingHistor
   factory _$DatingHistoryModelCopyWith(_DatingHistoryModel value, $Res Function(_DatingHistoryModel) _then) = __$DatingHistoryModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String userId, String description, String? recommendPlanId, MoodType mood, bool isOpenToCommunity, UserModel? user, List<String> likesUserId, List<AssetModel> assets, List<String> tags,@TimestampConverterNotNull() DateTime createdAt,@TimestampConverterNotNull() DateTime modifiedAt,@TimestampConverterNotNull() DateTime date
+ String id, String userId, String description, String? recommendPlanId, MoodType mood, bool isOpenToCommunity, UserModel? user, List<String> likesUserId, List<AssetModel> assets, List<String> tags,@TimestampConverter() DateTime createdAt,@TimestampConverter() DateTime modifiedAt,@TimestampConverter() DateTime date
 });
 
 

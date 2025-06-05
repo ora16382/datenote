@@ -6,6 +6,7 @@ import 'package:datenote/models/address/address_model.dart';
 import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
 import 'package:datenote/constant/config/fire_store_collection_name.dart';
+import 'package:datenote/util/mixin/controller_loading_mix.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:datenote/util/widget/dialog.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -14,7 +15,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class AddressManageController extends GetxController {
+class AddressManageController extends GetxController with ControllerLoadingMix {
   /// 주소 불러오기로 진입했는지 여부
   final isLoadAddress = Get.parameters['isLoadAddress'] == 'true';
 
@@ -38,9 +39,6 @@ class AddressManageController extends GetxController {
 
   /// Slidable 의 첫번째 요소를 위한 컨트롤러
   late final SlidableController slidableController;
-
-  /// 로딩 스핀 위젯 표시 상태
-  bool isLoadingProgress = false;
 
   @override
   void onInit() {
@@ -221,8 +219,7 @@ class AddressManageController extends GetxController {
     }
 
     try {
-      isLoadingProgress = true;
-      update([':loading']);
+      startLoading();
 
       await FirebaseFirestore.instance
           .collection(FireStoreCollectionName.address)
@@ -233,8 +230,7 @@ class AddressManageController extends GetxController {
     } catch (e) {
       showToast('주소 삭제 도중 오류가 발생하였습니다 잠시 후 다시 시도해주세요.');
     } finally {
-      isLoadingProgress = false;
-      update([':loading']);
+      endLoading();
     }
   }
 

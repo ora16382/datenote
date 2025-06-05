@@ -5,12 +5,13 @@ import 'package:datenote/models/recommend_plan/recommend_plan_model.dart';
 import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
 import 'package:datenote/constant/config/fire_store_collection_name.dart';
+import 'package:datenote/util/mixin/controller_loading_mix.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:datenote/util/widget/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RecommendPlanEditController extends GetxController {
+class RecommendPlanEditController extends GetxController with ControllerLoadingMix {
   /// 유저 컨트롤러
   final userCtrl = Get.find<UserController>();
 
@@ -26,9 +27,6 @@ class RecommendPlanEditController extends GetxController {
 
   /// 데이트 플랜 모델
   late RecommendPlanModel recommendPlanModel;
-
-  /// 로딩 상태
-  bool isLoadingProgress = false;
 
   @override
   void onInit() {
@@ -67,8 +65,7 @@ class RecommendPlanEditController extends GetxController {
   ///
   Future<void> onTapModify() async {
     try {
-      isLoadingProgress = true;
-      update([':loading']);
+      startLoading();
 
       await FirebaseFirestore.instance
           .collection(FireStoreCollectionName.recommendDatePlan)
@@ -89,8 +86,7 @@ class RecommendPlanEditController extends GetxController {
       showToast('데이트 플랜 수정에 실패했습니다. 잠시 후 다시 시도해 주세요.');
       return;
     } finally {
-      isLoadingProgress = false;
-      update([':loading']);
+      endLoading();
     }
   }
 

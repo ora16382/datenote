@@ -23,7 +23,7 @@ abstract class UserModel with _$UserModel {
     @JsonKey(fromJson: dateStyleFromJson, toJson: dateStyleToJson)
     List<DateStyle>? dateStyle,
     @JsonKey(fromJson: regionFromJson, toJson: regionToJson) Region? region,
-    @TimestampConverterNotNull() required DateTime createdAt,
+    @TimestampConverter() required DateTime createdAt,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

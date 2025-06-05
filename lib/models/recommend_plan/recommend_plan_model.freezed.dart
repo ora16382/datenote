@@ -17,7 +17,7 @@ T _$identity<T>(T value) => value;
 mixin _$RecommendPlanModel {
 
  String get id;// UUID
- String get userId;@JsonKey(name: 'date_plan_title') String get title;@JsonKey(name: 'why_recommend_dating_plans') String get description;@JsonKey(name: 'date_places') List<PlaceModel> get places; AddressModel get baseAddress;@TimestampConverterNotNull() DateTime get date;@TimestampConverterNotNull() DateTime get createdAt;@TimestampConverterNotNull() DateTime get modifiedAt;
+ String get userId;@JsonKey(name: 'date_plan_title') String get title;@JsonKey(name: 'why_recommend_dating_plans') String get description;@JsonKey(name: 'date_places') List<PlaceModel> get places; AddressModel get baseAddress;@TimestampConverter() DateTime get date;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime get modifiedAt;
 /// Create a copy of RecommendPlanModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -50,7 +50,7 @@ abstract mixin class $RecommendPlanModelCopyWith<$Res>  {
   factory $RecommendPlanModelCopyWith(RecommendPlanModel value, $Res Function(RecommendPlanModel) _then) = _$RecommendPlanModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String userId,@JsonKey(name: 'date_plan_title') String title,@JsonKey(name: 'why_recommend_dating_plans') String description,@JsonKey(name: 'date_places') List<PlaceModel> places, AddressModel baseAddress,@TimestampConverterNotNull() DateTime date,@TimestampConverterNotNull() DateTime createdAt,@TimestampConverterNotNull() DateTime modifiedAt
+ String id, String userId,@JsonKey(name: 'date_plan_title') String title,@JsonKey(name: 'why_recommend_dating_plans') String description,@JsonKey(name: 'date_places') List<PlaceModel> places, AddressModel baseAddress,@TimestampConverter() DateTime date,@TimestampConverter() DateTime createdAt,@TimestampConverter() DateTime modifiedAt
 });
 
 
@@ -98,7 +98,7 @@ $AddressModelCopyWith<$Res> get baseAddress {
 
 @JsonSerializable(explicitToJson: true)
 class _RecommendPlanModel implements RecommendPlanModel {
-  const _RecommendPlanModel({required this.id, required this.userId, @JsonKey(name: 'date_plan_title') required this.title, @JsonKey(name: 'why_recommend_dating_plans') required this.description, @JsonKey(name: 'date_places') required final  List<PlaceModel> places, required this.baseAddress, @TimestampConverterNotNull() required this.date, @TimestampConverterNotNull() required this.createdAt, @TimestampConverterNotNull() required this.modifiedAt}): _places = places;
+  const _RecommendPlanModel({required this.id, required this.userId, @JsonKey(name: 'date_plan_title') required this.title, @JsonKey(name: 'why_recommend_dating_plans') required this.description, @JsonKey(name: 'date_places') required final  List<PlaceModel> places, required this.baseAddress, @TimestampConverter() required this.date, @TimestampConverter() required this.createdAt, @TimestampConverter() required this.modifiedAt}): _places = places;
   factory _RecommendPlanModel.fromJson(Map<String, dynamic> json) => _$RecommendPlanModelFromJson(json);
 
 @override final  String id;
@@ -114,9 +114,9 @@ class _RecommendPlanModel implements RecommendPlanModel {
 }
 
 @override final  AddressModel baseAddress;
-@override@TimestampConverterNotNull() final  DateTime date;
-@override@TimestampConverterNotNull() final  DateTime createdAt;
-@override@TimestampConverterNotNull() final  DateTime modifiedAt;
+@override@TimestampConverter() final  DateTime date;
+@override@TimestampConverter() final  DateTime createdAt;
+@override@TimestampConverter() final  DateTime modifiedAt;
 
 /// Create a copy of RecommendPlanModel
 /// with the given fields replaced by the non-null parameter values.
@@ -151,7 +151,7 @@ abstract mixin class _$RecommendPlanModelCopyWith<$Res> implements $RecommendPla
   factory _$RecommendPlanModelCopyWith(_RecommendPlanModel value, $Res Function(_RecommendPlanModel) _then) = __$RecommendPlanModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String userId,@JsonKey(name: 'date_plan_title') String title,@JsonKey(name: 'why_recommend_dating_plans') String description,@JsonKey(name: 'date_places') List<PlaceModel> places, AddressModel baseAddress,@TimestampConverterNotNull() DateTime date,@TimestampConverterNotNull() DateTime createdAt,@TimestampConverterNotNull() DateTime modifiedAt
+ String id, String userId,@JsonKey(name: 'date_plan_title') String title,@JsonKey(name: 'why_recommend_dating_plans') String description,@JsonKey(name: 'date_places') List<PlaceModel> places, AddressModel baseAddress,@TimestampConverter() DateTime date,@TimestampConverter() DateTime createdAt,@TimestampConverter() DateTime modifiedAt
 });
 
 

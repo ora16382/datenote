@@ -19,23 +19,20 @@ _RecommendPlanModel _$RecommendPlanModelFromJson(Map<String, dynamic> json) =>
       baseAddress: AddressModel.fromJson(
         json['baseAddress'] as Map<String, dynamic>,
       ),
-      date: const TimestampConverterNotNull().fromJson(json['date']),
-      createdAt: const TimestampConverterNotNull().fromJson(json['createdAt']),
-      modifiedAt: const TimestampConverterNotNull().fromJson(
-        json['modifiedAt'],
-      ),
+      date: const TimestampConverter().fromJson(json['date']),
+      createdAt: const TimestampConverter().fromJson(json['createdAt']),
+      modifiedAt: const TimestampConverter().fromJson(json['modifiedAt']),
     );
 
-Map<String, dynamic> _$RecommendPlanModelToJson(
-  _RecommendPlanModel instance,
-) => <String, dynamic>{
-  'id': instance.id,
-  'userId': instance.userId,
-  'date_plan_title': instance.title,
-  'why_recommend_dating_plans': instance.description,
-  'date_places': instance.places.map((e) => e.toJson()).toList(),
-  'baseAddress': instance.baseAddress.toJson(),
-  'date': const TimestampConverterNotNull().toJson(instance.date),
-  'createdAt': const TimestampConverterNotNull().toJson(instance.createdAt),
-  'modifiedAt': const TimestampConverterNotNull().toJson(instance.modifiedAt),
-};
+Map<String, dynamic> _$RecommendPlanModelToJson(_RecommendPlanModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'userId': instance.userId,
+      'date_plan_title': instance.title,
+      'why_recommend_dating_plans': instance.description,
+      'date_places': instance.places.map((e) => e.toJson()).toList(),
+      'baseAddress': instance.baseAddress.toJson(),
+      'date': const TimestampConverter().toJson(instance.date),
+      'createdAt': const TimestampConverter().toJson(instance.createdAt),
+      'modifiedAt': const TimestampConverter().toJson(instance.modifiedAt),
+    };

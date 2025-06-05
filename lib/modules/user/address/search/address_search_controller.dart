@@ -6,6 +6,7 @@ import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
 import 'package:datenote/services/kakao_local_service.dart';
 import 'package:datenote/constant/config/fire_store_collection_name.dart';
+import 'package:datenote/util/mixin/controller_loading_mix.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:daum_postcode_search/daum_postcode_search.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
-class AddressSearchController extends GetxController {
+class AddressSearchController extends GetxController with ControllerLoadingMix{
   /// 수정 모드 여부
   final isModify = Get.parameters['isModify'] == 'true';
 
@@ -54,9 +55,6 @@ class AddressSearchController extends GetxController {
 
   /// 위 경도
   Location? location;
-
-  /// 로딩 스핀 위젯 표시 상태
-  bool isLoadingProgress = false;
 
   /// 주소록 저장 여부
   final isSaveAddress = false.obs;
@@ -152,8 +150,7 @@ class AddressSearchController extends GetxController {
   ///
   Future<void> fetchCurrentLocation() async {
     try {
-      isLoadingProgress = true;
-      update([':loading']);
+      startLoading();
 
       Position? position = await getCurrentPosition();
       if (position != null) {
@@ -173,19 +170,16 @@ class AddressSearchController extends GetxController {
         if (addressName == null) {
           showToast('주소를 읽어오는데 실패했습니다. 주소를 다시 설정해주세요');
 
-          isLoadingProgress = false;
-          update([':loading']);
+          endLoading();
           return;
         }
 
         addressController.text = addressName;
 
-        isLoadingProgress = false;
-        update([':loading']);
+        endLoading();
       }
     } catch (e) {
-      isLoadingProgress = false;
-      update([':loading']);
+      endLoading();
       logger.e(e.toString());
       Get.snackbar('오류 발생', '주소를 불러오는 도중 오류가 발생하였습니다.');
     }
@@ -203,8 +197,7 @@ class AddressSearchController extends GetxController {
       /// 위치 정보 초기화
       location = null;
 
-      isLoadingProgress = true;
-      update([':loading']);
+      startLoading();
 
       /// 주소로 위경도 변환
       final roadAddressDetailInfo = await kakaoLocalService
@@ -220,15 +213,13 @@ class AddressSearchController extends GetxController {
       } else {
         showToast('좌표주소를 읽어오는데 실패했습니다. 주소를 다시 설정해주세요');
 
-        isLoadingProgress = false;
-        update([':loading']);
+        endLoading();
         return;
       }
 
       _addressController.text = '[${result.zonecode}] ${result.roadAddress}';
 
-      isLoadingProgress = false;
-      update([':loading']);
+      endLoading();
 
       detailAddressFocusNode.requestFocus();
     }
@@ -305,8 +296,7 @@ class AddressSearchController extends GetxController {
 
     final addressName = _addressNameController.text.trim();
 
-    isLoadingProgress = true;
-    update([':loading']);
+    startLoading();
 
     try {
       if (isModify) {
@@ -361,8 +351,7 @@ class AddressSearchController extends GetxController {
     } catch (e) {
       showToast('주소 정보 업데이트 도중 오류가 발생하였습니다 잠시 후 다시 시도해주세요.');
     } finally {
-      isLoadingProgress = false;
-      update([':loading']);
+      endLoading();
     }
   }
 

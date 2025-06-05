@@ -4,6 +4,7 @@ import 'package:datenote/main.dart';
 import 'package:datenote/modules/main/recommendPlan/recommend_plan_controller.dart';
 import 'package:datenote/modules/user/address/search/address_search_controller.dart';
 import 'package:datenote/util/app_color.dart';
+import 'package:datenote/util/widget/common_loading_indicator_widget.dart';
 import 'package:datenote/util/widget/common_widget.dart';
 import 'package:datenote/util/widget/date_selector.dart';
 import 'package:flutter/material.dart';
@@ -301,22 +302,7 @@ class _RecommendPlanViewState extends State<RecommendPlanView> {
                     ],
                   ),
                 ),
-                GetBuilder<AddressSearchController>(
-                  tag: ':recommend_plan',
-                  id: ':loading',
-                  builder: (ctrl) {
-                    if (!ctrl.isLoadingProgress) {
-                      return const SizedBox();
-                    } else {
-                      return Center(
-                        child: SpinKitFadingCircle(
-                          color: AppColors.primary,
-                          size: 50.0,
-                        ),
-                      );
-                    }
-                  },
-                ),
+                CommonLoadingIndicator<AddressSearchController>(tag: ':recommend_plan',),
               ],
             ),
           ),

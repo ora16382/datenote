@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
- String get uid; String get email; String get displayName;@JsonKey(fromJson: ageGroupFromJson, toJson: ageGroupToJson) AgeGroup? get ageGroup;@JsonKey(fromJson: genderFromJson, toJson: genderToJson) Gender? get gender;@JsonKey(fromJson: dateStyleFromJson, toJson: dateStyleToJson) List<DateStyle>? get dateStyle;@JsonKey(fromJson: regionFromJson, toJson: regionToJson) Region? get region;@TimestampConverterNotNull() DateTime get createdAt;
+ String get uid; String get email; String get displayName;@JsonKey(fromJson: ageGroupFromJson, toJson: ageGroupToJson) AgeGroup? get ageGroup;@JsonKey(fromJson: genderFromJson, toJson: genderToJson) Gender? get gender;@JsonKey(fromJson: dateStyleFromJson, toJson: dateStyleToJson) List<DateStyle>? get dateStyle;@JsonKey(fromJson: regionFromJson, toJson: regionToJson) Region? get region;@TimestampConverter() DateTime get createdAt;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,7 +49,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String uid, String email, String displayName,@JsonKey(fromJson: ageGroupFromJson, toJson: ageGroupToJson) AgeGroup? ageGroup,@JsonKey(fromJson: genderFromJson, toJson: genderToJson) Gender? gender,@JsonKey(fromJson: dateStyleFromJson, toJson: dateStyleToJson) List<DateStyle>? dateStyle,@JsonKey(fromJson: regionFromJson, toJson: regionToJson) Region? region,@TimestampConverterNotNull() DateTime createdAt
+ String uid, String email, String displayName,@JsonKey(fromJson: ageGroupFromJson, toJson: ageGroupToJson) AgeGroup? ageGroup,@JsonKey(fromJson: genderFromJson, toJson: genderToJson) Gender? gender,@JsonKey(fromJson: dateStyleFromJson, toJson: dateStyleToJson) List<DateStyle>? dateStyle,@JsonKey(fromJson: regionFromJson, toJson: regionToJson) Region? region,@TimestampConverter() DateTime createdAt
 });
 
 
@@ -87,7 +87,7 @@ as DateTime,
 @JsonSerializable()
 
 class _UserModel implements UserModel {
-  const _UserModel({required this.uid, required this.email, required this.displayName, @JsonKey(fromJson: ageGroupFromJson, toJson: ageGroupToJson) this.ageGroup, @JsonKey(fromJson: genderFromJson, toJson: genderToJson) this.gender, @JsonKey(fromJson: dateStyleFromJson, toJson: dateStyleToJson) final  List<DateStyle>? dateStyle, @JsonKey(fromJson: regionFromJson, toJson: regionToJson) this.region, @TimestampConverterNotNull() required this.createdAt}): _dateStyle = dateStyle;
+  const _UserModel({required this.uid, required this.email, required this.displayName, @JsonKey(fromJson: ageGroupFromJson, toJson: ageGroupToJson) this.ageGroup, @JsonKey(fromJson: genderFromJson, toJson: genderToJson) this.gender, @JsonKey(fromJson: dateStyleFromJson, toJson: dateStyleToJson) final  List<DateStyle>? dateStyle, @JsonKey(fromJson: regionFromJson, toJson: regionToJson) this.region, @TimestampConverter() required this.createdAt}): _dateStyle = dateStyle;
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String uid;
@@ -105,7 +105,7 @@ class _UserModel implements UserModel {
 }
 
 @override@JsonKey(fromJson: regionFromJson, toJson: regionToJson) final  Region? region;
-@override@TimestampConverterNotNull() final  DateTime createdAt;
+@override@TimestampConverter() final  DateTime createdAt;
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
@@ -140,7 +140,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String uid, String email, String displayName,@JsonKey(fromJson: ageGroupFromJson, toJson: ageGroupToJson) AgeGroup? ageGroup,@JsonKey(fromJson: genderFromJson, toJson: genderToJson) Gender? gender,@JsonKey(fromJson: dateStyleFromJson, toJson: dateStyleToJson) List<DateStyle>? dateStyle,@JsonKey(fromJson: regionFromJson, toJson: regionToJson) Region? region,@TimestampConverterNotNull() DateTime createdAt
+ String uid, String email, String displayName,@JsonKey(fromJson: ageGroupFromJson, toJson: ageGroupToJson) AgeGroup? ageGroup,@JsonKey(fromJson: genderFromJson, toJson: genderToJson) Gender? gender,@JsonKey(fromJson: dateStyleFromJson, toJson: dateStyleToJson) List<DateStyle>? dateStyle,@JsonKey(fromJson: regionFromJson, toJson: regionToJson) Region? region,@TimestampConverter() DateTime createdAt
 });
 
 

@@ -10,7 +10,7 @@ _AssetModel _$AssetModelFromJson(Map<String, dynamic> json) => _AssetModel(
   id: json['id'] as String,
   url: json['url'] as String?,
   type: $enumDecode(_$AssetTypeEnumMap, json['type']),
-  createdAt: const TimestampConverterNotNull().fromJson(json['createdAt']),
+  createdAt: const TimestampConverter().fromJson(json['createdAt']),
   thumbnailUrl: json['thumbnailUrl'] as String?,
 );
 
@@ -19,7 +19,7 @@ Map<String, dynamic> _$AssetModelToJson(_AssetModel instance) =>
       'id': instance.id,
       'url': instance.url,
       'type': _$AssetTypeEnumMap[instance.type]!,
-      'createdAt': const TimestampConverterNotNull().toJson(instance.createdAt),
+      'createdAt': const TimestampConverter().toJson(instance.createdAt),
       'thumbnailUrl': instance.thumbnailUrl,
     };
 

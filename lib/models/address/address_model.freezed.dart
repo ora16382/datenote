@@ -20,7 +20,7 @@ mixin _$AddressModel {
  String get address;// 기본 주소 (지번/도로명)
  String get detailAddress;// 상세 주소 (건물명, 호수 등)
  String get addressName;// 사용자가 설정한 주소 이름 (예: 집, 회사)
- double get latitude; double get longitude;@TimestampConverterNotNull() DateTime get createdAt;@TimestampConverterNotNull() DateTime get orderDate;
+ double get latitude; double get longitude;@TimestampConverter() DateTime get createdAt;@TimestampConverter() DateTime get orderDate;
 /// Create a copy of AddressModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -53,7 +53,7 @@ abstract mixin class $AddressModelCopyWith<$Res>  {
   factory $AddressModelCopyWith(AddressModel value, $Res Function(AddressModel) _then) = _$AddressModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String address, String detailAddress, String addressName, double latitude, double longitude,@TimestampConverterNotNull() DateTime createdAt,@TimestampConverterNotNull() DateTime orderDate
+ String id, String address, String detailAddress, String addressName, double latitude, double longitude,@TimestampConverter() DateTime createdAt,@TimestampConverter() DateTime orderDate
 });
 
 
@@ -91,7 +91,7 @@ as DateTime,
 @JsonSerializable()
 
 class _AddressModel implements AddressModel {
-  const _AddressModel({required this.id, required this.address, required this.detailAddress, required this.addressName, required this.latitude, required this.longitude, @TimestampConverterNotNull() required this.createdAt, @TimestampConverterNotNull() required this.orderDate});
+  const _AddressModel({required this.id, required this.address, required this.detailAddress, required this.addressName, required this.latitude, required this.longitude, @TimestampConverter() required this.createdAt, @TimestampConverter() required this.orderDate});
   factory _AddressModel.fromJson(Map<String, dynamic> json) => _$AddressModelFromJson(json);
 
 @override final  String id;
@@ -104,8 +104,8 @@ class _AddressModel implements AddressModel {
 // 사용자가 설정한 주소 이름 (예: 집, 회사)
 @override final  double latitude;
 @override final  double longitude;
-@override@TimestampConverterNotNull() final  DateTime createdAt;
-@override@TimestampConverterNotNull() final  DateTime orderDate;
+@override@TimestampConverter() final  DateTime createdAt;
+@override@TimestampConverter() final  DateTime orderDate;
 
 /// Create a copy of AddressModel
 /// with the given fields replaced by the non-null parameter values.
@@ -140,7 +140,7 @@ abstract mixin class _$AddressModelCopyWith<$Res> implements $AddressModelCopyWi
   factory _$AddressModelCopyWith(_AddressModel value, $Res Function(_AddressModel) _then) = __$AddressModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String address, String detailAddress, String addressName, double latitude, double longitude,@TimestampConverterNotNull() DateTime createdAt,@TimestampConverterNotNull() DateTime orderDate
+ String id, String address, String detailAddress, String addressName, double latitude, double longitude,@TimestampConverter() DateTime createdAt,@TimestampConverter() DateTime orderDate
 });
 
 

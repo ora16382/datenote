@@ -5,11 +5,13 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 class CommonLoadingIndicator<T extends ControllerLoadingMix> extends StatelessWidget {
-  const CommonLoadingIndicator({super.key});
+  final String? tag;
+  const CommonLoadingIndicator({super.key, this.tag});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<T>(
+      tag: tag,
       id: ControllerLoadingMix.buildIdName,
       builder: (controller) {
         if (controller.isLoadingProgress) {
