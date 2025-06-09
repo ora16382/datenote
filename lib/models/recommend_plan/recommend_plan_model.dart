@@ -1,8 +1,8 @@
 // ignore_for_file: invalid_annotation_target
 
 import 'package:datenote/constant/converter/timestamp_converter.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:datenote/models/place/place_model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../address/address_model.dart';
 

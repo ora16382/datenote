@@ -2,9 +2,7 @@
 
 import 'dart:collection';
 
-import 'package:datenote/main.dart';
 import 'package:datenote/util/api/weather_api.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 

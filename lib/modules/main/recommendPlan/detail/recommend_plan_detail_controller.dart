@@ -1,18 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:datenote/models/asset/asset_model.dart';
-import 'package:datenote/models/dating_history/dating_history_model.dart';
+import 'package:datenote/constant/config/fire_store_collection_name.dart';
 import 'package:datenote/models/place/place_model.dart';
 import 'package:datenote/models/recommend_plan/recommend_plan_model.dart';
 import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
-import 'package:datenote/constant/config/fire_store_collection_name.dart';
 import 'package:datenote/util/mixin/controller_loading_mix.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:datenote/util/widget/dialog.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../main.dart';
 import '../../main_controller.dart';
 
 class RecommendPlanDetailController extends GetxController with ControllerLoadingMix {

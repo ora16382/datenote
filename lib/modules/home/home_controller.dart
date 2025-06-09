@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../../constant/enum/home_type.dart';
-import '../../main.dart';
 
 class HomeController extends GetxController {
   final homeType = HomeType.main.obs;

@@ -1,4 +1,4 @@
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
+
 
 enum Gender {
   male('남자'),

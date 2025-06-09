@@ -1,5 +1,4 @@
 // lib/services/openai_service.dart
-import 'package:datenote/main.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
@@ -32,7 +31,6 @@ class WeatherAPI extends GetConnect {
     required double latitude,
     required double longitude,
   }) async {
-    print('DEBUG API KEY: $_apiKey');
     return get(
       'forecast?lat=$latitude&lon=$longitude&exclude=minutely,hourly,current,alerts&appid=$_apiKey&units=metric&lang=kr',
     );

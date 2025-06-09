@@ -1,4 +1,3 @@
-import 'package:datenote/main.dart';
 import 'package:datenote/models/address/address_model.dart';
 import 'package:datenote/models/place/place_model.dart';
 import 'package:datenote/services/kakao_local_service.dart';

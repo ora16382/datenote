@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 
 import '../../../util/app_color.dart';
 import '../../constant/enum/home_type.dart';
-import '../../main.dart';
 import 'home_controller.dart';
 
 class HomeView extends StatelessWidget {

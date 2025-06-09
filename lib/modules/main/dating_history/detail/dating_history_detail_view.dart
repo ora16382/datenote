@@ -1,6 +1,5 @@
 import 'package:datenote/constant/enum/assets_type.dart';
 import 'package:datenote/models/comment/comment_model.dart';
-import 'package:datenote/models/dating_history/dating_history_model.dart';
 import 'package:datenote/modules/main/dating_history/detail/dating_history_detail_controller.dart';
 import 'package:datenote/util/app_color.dart';
 import 'package:datenote/util/widget/common_loading_indicator_widget.dart';

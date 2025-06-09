@@ -12,8 +12,6 @@ import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../main.dart';
-
 class MainView extends StatefulWidget {
   const MainView({super.key});
 

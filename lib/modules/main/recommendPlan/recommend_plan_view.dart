@@ -1,6 +1,5 @@
 import 'package:datenote/constant/enum/preferred_date_type.dart';
 import 'package:datenote/constant/enum/recommend_plan_step_type.dart';
-import 'package:datenote/main.dart';
 import 'package:datenote/modules/main/recommendPlan/recommend_plan_controller.dart';
 import 'package:datenote/modules/user/address/search/address_search_controller.dart';
 import 'package:datenote/util/app_color.dart';
@@ -11,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class RecommendPlanView extends StatefulWidget {

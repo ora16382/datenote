@@ -4,8 +4,8 @@ import 'package:datenote/util/widget/common_loading_indicator_widget.dart';
 import 'package:datenote/util/widget/common_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+
 import 'profile_setting_controller.dart';
 
 class ProfileSettingView extends StatelessWidget {

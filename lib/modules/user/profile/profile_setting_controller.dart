@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:datenote/models/user/user_model.dart';
-import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/constant/config/fire_store_collection_name.dart';
+import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/util/mixin/controller_loading_mix.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';

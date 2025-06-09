@@ -2,8 +2,6 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
-import '../../main.dart' show logger;
-
 class OpenAiAPI extends GetConnect {
   static const String _baseUrl = 'https://api.openai.com/v1';
   final defaultHeader = {

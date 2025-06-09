@@ -1,11 +1,10 @@
-import 'package:datenote/main.dart';
 import 'package:datenote/modules/main/recommendPlan/place/search/place_search_controller.dart';
+import 'package:datenote/util/app_color.dart';
 import 'package:datenote/util/widget/common_widget.dart';
 import 'package:datenote/util/widget/pagination_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:datenote/util/app_color.dart';
 
 class PlaceSearchView extends StatefulWidget {
   const PlaceSearchView({super.key});

@@ -8,7 +8,6 @@ import '../../constant/enum/age_group.dart';
 import '../../constant/enum/date_style.dart';
 
 part 'user_model.freezed.dart';
-
 part 'user_model.g.dart';
 
 @freezed

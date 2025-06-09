@@ -1,18 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:datenote/constant/config/fire_store_collection_name.dart';
 import 'package:datenote/constant/enum/age_group.dart';
 import 'package:datenote/constant/enum/collecting_information_page.dart';
 import 'package:datenote/constant/enum/date_style.dart';
 import 'package:datenote/constant/enum/gender.dart';
 import 'package:datenote/constant/enum/region.dart';
 import 'package:datenote/modules/user/user_controller.dart';
-import 'package:datenote/constant/config/fire_store_collection_name.dart';
 import 'package:datenote/util/mixin/controller_loading_mix.dart';
 import 'package:datenote/util/widget/alert.dart';
 import 'package:datenote/util/widget/dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-
-import '../../../main.dart';
 
 class CollectingInformationController extends GetxController with ControllerLoadingMix{
   final userCtrl = Get.find<UserController>();

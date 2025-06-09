@@ -1,16 +1,12 @@
 // lib/services/openai_service.dart
 
-import 'dart:convert';
 import 'dart:math';
 
-import 'package:datenote/main.dart';
 import 'package:datenote/models/address/address_model.dart';
 import 'package:datenote/modules/user/address/search/address_search_controller.dart';
 import 'package:datenote/util/api/kakao_local_api.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
-
-import '../util/api/open_ai_api.dart';
 
 class KakaoLocalService extends GetxService {
   final KakaoLocalApi _kakaoLocalApi = KakaoLocalApi();

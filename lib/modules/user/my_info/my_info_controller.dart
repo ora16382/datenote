@@ -1,9 +1,8 @@
 import 'package:datenote/routes/app_pages.dart';
-import 'package:datenote/util/app_color.dart';
 import 'package:datenote/util/widget/dialog.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+
 import '../auth/auth_controller.dart';
 
 class MyInfoController extends GetxController {

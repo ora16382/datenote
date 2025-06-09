@@ -7,14 +7,14 @@ import 'package:datenote/services/open_ai_service.dart';
 import 'package:datenote/services/weather_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:logger/logger.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'constant/theme/app_theme.dart';
 import 'firebase_options.dart';
 import 'modules/user/user_controller.dart';

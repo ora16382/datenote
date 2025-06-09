@@ -4,14 +4,12 @@ import 'dart:io';
 
 import 'package:datenote/constant/enum/assets_type.dart';
 import 'package:datenote/constant/enum/mood_type.dart';
-import 'package:datenote/models/dating_history/dating_history_model.dart';
 import 'package:datenote/modules/main/dating_history/edit/dating_history_edit_controller.dart';
 import 'package:datenote/util/app_color.dart';
 import 'package:datenote/util/widget/common_loading_indicator_widget.dart';
 import 'package:datenote/util/widget/common_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';

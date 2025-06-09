@@ -3,13 +3,9 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
-import 'package:uuid/v4.dart';
-
-import '../../main.dart';
 
 class FileUtils {
   // ignore: slash_for_doc_comments

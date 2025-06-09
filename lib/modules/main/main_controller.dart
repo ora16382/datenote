@@ -10,7 +10,6 @@ import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
 import 'package:datenote/services/weather_service.dart';
 import 'package:datenote/util/functions/common_functions.dart';
-import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:jiffy/jiffy.dart';

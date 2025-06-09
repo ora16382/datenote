@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:datenote/constant/config/fire_store_collection_name.dart';
 import 'package:datenote/models/user/user_model.dart';
 import 'package:datenote/modules/user/auth/auth_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
-import 'package:datenote/constant/config/fire_store_collection_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';

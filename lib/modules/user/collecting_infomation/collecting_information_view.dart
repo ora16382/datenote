@@ -12,7 +12,6 @@ import 'package:datenote/util/app_color.dart';
 import 'package:datenote/util/widget/common_loading_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 

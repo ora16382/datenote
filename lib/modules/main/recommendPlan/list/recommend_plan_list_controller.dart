@@ -2,23 +2,15 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:datenote/models/address/address_model.dart';
+import 'package:datenote/constant/config/fire_store_collection_name.dart';
 import 'package:datenote/models/recommend_plan/recommend_plan_model.dart';
 import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
-import 'package:datenote/constant/config/fire_store_collection_name.dart';
 import 'package:datenote/util/functions/common_functions.dart';
 import 'package:datenote/util/mixin/controller_loading_mix.dart';
-import 'package:datenote/util/widget/alert.dart';
-import 'package:datenote/util/widget/dialog.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-import '../../../../main.dart';
 
 class RecommendPlanListController extends GetxController with ControllerLoadingMix {
   /// 선택모드 여부(데이트 기록 작성에서 사용)

@@ -1,5 +1,4 @@
 import 'package:datenote/util/app_color.dart';
-import 'package:datenote/util/functions/common_functions.dart';
 import 'package:datenote/util/widget/common_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
