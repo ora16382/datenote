@@ -10,8 +10,10 @@ import 'package:datenote/modules/user/user_controller.dart';
 import 'package:datenote/routes/app_pages.dart';
 import 'package:datenote/services/weather_service.dart';
 import 'package:datenote/util/functions/common_functions.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -69,12 +71,29 @@ class MainController extends GetxController {
 
   LinkedHashSet<DateTime> isAlreadyLoadedDateSet = LinkedHashSet(equals: isSameDay, hashCode: getHashCode);
 
+  /// ======================== ///
+  /// 광고 관련 변수
+  /// ======================== ///
+
+  /// Banner 광고 객체
+  late BannerAd bannerAd;
+
+  /// Banner 광고 로딩 여부
+  bool isAdLoaded = false;
+
   @override
   void onInit() {
     super.onInit();
 
+    // loadBannerAd();
     fetchWeather();
     selectPlanAndDatingHistoryData();
+  }
+
+  @override
+  void onClose() {
+    // bannerAd.dispose();
+    super.onClose();
   }
 
   /// @author 정준형
@@ -292,9 +311,9 @@ class MainController extends GetxController {
   ///
   void onTapLeftChevron() {
     DateTime previousDateTime;
-    if(calendarFormat == CalendarFormat.month) {
+    if (calendarFormat == CalendarFormat.month) {
       previousDateTime = DateTime(focusedDay.year, focusedDay.month - 1);
-    } else if(calendarFormat == CalendarFormat.twoWeeks){
+    } else if (calendarFormat == CalendarFormat.twoWeeks) {
       previousDateTime = DateTime(focusedDay.year, focusedDay.month, focusedDay.day - 14);
     } else {
       previousDateTime = DateTime(focusedDay.year, focusedDay.month, focusedDay.day - 7);
@@ -309,9 +328,9 @@ class MainController extends GetxController {
   ///
   void onTapRightChevron() {
     DateTime nextDateTime;
-    if(calendarFormat == CalendarFormat.month) {
+    if (calendarFormat == CalendarFormat.month) {
       nextDateTime = DateTime(focusedDay.year, focusedDay.month + 1);
-    } else if(calendarFormat == CalendarFormat.twoWeeks){
+    } else if (calendarFormat == CalendarFormat.twoWeeks) {
       nextDateTime = DateTime(focusedDay.year, focusedDay.month, focusedDay.day + 14);
     } else {
       nextDateTime = DateTime(focusedDay.year, focusedDay.month, focusedDay.day + 7);
@@ -356,5 +375,58 @@ class MainController extends GetxController {
   void onFormatChanged(CalendarFormat format) {
     calendarFormat = format;
     update([':calendar']);
+  }
+
+  /// @author 정준형
+  /// @since 2025. 6. 9.
+  /// @comment
+  ///
+  void loadBannerAd() {
+    bannerAd = BannerAd(
+      adUnitId: 'ca-app-pub-3940256099942544/6300978111', // ✅ 테스트 광고 ID (Android)
+      size: AdSize.fullBanner,
+      request: AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) => isAdLoaded = true,
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          print('배너 광고 로드 실패: $error');
+        },
+      ),
+    )..load();
+  }
+
+  Future<void> loadAdaptiveBannerAd() async {
+    final AnchoredAdaptiveBannerAdSize? size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+      MediaQuery.of(Get.context!).size.width.truncate(),
+    );
+
+    if (size == null) {
+      print('적응형 배너 광고 크기를 가져오지 못했습니다.');
+      return;
+    }
+
+     bannerAd = BannerAd(
+      size: size,
+      adUnitId: 'ca-app-pub-3940256099942544/9214589741', // ✅ 테스트용 ID
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          isAdLoaded = true;
+          update([':bannerAd']);
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          print('❌ 적응형 배너 로드 실패: $error');
+        },
+      ),
+      request: const AdRequest(),
+    );
+
+    bannerAd.load();
+  }
+
+  void bannerAdReset() {
+    bannerAd.dispose();
+    isAdLoaded = false;
   }
 }

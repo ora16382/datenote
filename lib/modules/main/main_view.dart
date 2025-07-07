@@ -1,6 +1,7 @@
 import 'package:datenote/constant/enum/assets_type.dart';
 import 'package:datenote/models/dating_history/dating_history_model.dart';
 import 'package:datenote/models/recommend_plan/recommend_plan_model.dart';
+import 'package:datenote/models/test/rewarded_test_view.dart';
 import 'package:datenote/modules/main/main_controller.dart';
 import 'package:datenote/util/app_color.dart';
 import 'package:datenote/util/widget/common_widget.dart';
@@ -8,9 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+import '../../main.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -24,7 +28,14 @@ class _MainViewState extends State<MainView> {
 
   @override
   void initState() {
+    controller.loadAdaptiveBannerAd();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.bannerAdReset();
+    super.dispose();
   }
 
   @override
@@ -36,6 +47,7 @@ class _MainViewState extends State<MainView> {
       child: ListView(
         children: [
           _buildWeatherWidget(),
+          _buildBannerAdWidget(),
           _buildToListButtonsWidget(),
           _buildCalendarWidget(),
           _buildDateContentSection(),
@@ -49,132 +61,137 @@ class _MainViewState extends State<MainView> {
   /// @comment 날씨 위젯 part
   ///
   Widget _buildWeatherWidget() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: GetBuilder<MainController>(
-        id: ':weatherWidget',
-        builder: (context) {
-          if (controller.isWeatherLoading) {
-            return Container(
-              height: 138,
-              alignment: Alignment.center,
-              child: SpinKitFadingCircle(color: AppColors.primary, size: 50.0),
-            );
-          } else if (controller.isWeatherError) {
-            return Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 8.0),
-                      child: const Icon(Icons.error, size: 24, color: Colors.grey),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 8.0),
-                      child: Text('에러가 발생했어요', style: Get.textTheme.headlineSmall),
-                    ),
-                    Text(
-                      '날씨 정보를 불러오는중 에러가 발생했어요,\n잠시후 다시 시도해주세요',
-                      textAlign: TextAlign.center,
-                      style: Get.textTheme.bodySmall?.copyWith(color: AppColors.grey),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          } else if (!controller.isLocationPermission) {
-            return Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 8.0),
-                      child: const Icon(Icons.location_off, size: 24, color: Colors.grey),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 8.0),
-                      child: Text('위치 권한이 필요해요!', style: Get.textTheme.headlineSmall),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 12.0),
-                      child: Text(
-                        '날씨 정보를 확인하려면\n위치 접근을 허용해주세요.',
+    return GestureDetector(
+      onTap: (){
+        Get.to(RewardedAdTestView());
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        child: GetBuilder<MainController>(
+          id: ':weatherWidget',
+          builder: (context) {
+            if (controller.isWeatherLoading) {
+              return Container(
+                height: 138,
+                alignment: Alignment.center,
+                child: SpinKitFadingCircle(color: AppColors.primary, size: 50.0),
+              );
+            } else if (controller.isWeatherError) {
+              return Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 8.0),
+                        child: const Icon(Icons.error, size: 24, color: Colors.grey),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 8.0),
+                        child: Text('에러가 발생했어요', style: Get.textTheme.headlineSmall),
+                      ),
+                      Text(
+                        '날씨 정보를 불러오는중 에러가 발생했어요,\n잠시후 다시 시도해주세요',
                         textAlign: TextAlign.center,
                         style: Get.textTheme.bodySmall?.copyWith(color: AppColors.grey),
                       ),
-                    ),
-                    ElevatedButton(onPressed: controller.onTapLocationSettingBtn, child: const Text('권한 설정하기')),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          } else {
-            final String iconUrl =
-                "https://openweathermap.org/img/wn/${(((controller.weatherInfo?['weather'] as List?)?.firstOrNull?['icon'] ?? '') as String).replaceAll('n', 'd')}@2x.png";
+              );
+            } else if (!controller.isLocationPermission) {
+              return Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 8.0),
+                        child: const Icon(Icons.location_off, size: 24, color: Colors.grey),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 8.0),
+                        child: Text('위치 권한이 필요해요!', style: Get.textTheme.headlineSmall),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 12.0),
+                        child: Text(
+                          '날씨 정보를 확인하려면\n위치 접근을 허용해주세요.',
+                          textAlign: TextAlign.center,
+                          style: Get.textTheme.bodySmall?.copyWith(color: AppColors.grey),
+                        ),
+                      ),
+                      ElevatedButton(onPressed: controller.onTapLocationSettingBtn, child: const Text('권한 설정하기')),
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              final String iconUrl =
+                  "https://openweathermap.org/img/wn/${(((controller.weatherInfo?['weather'] as List?)?.firstOrNull?['icon'] ?? '') as String).replaceAll('n', 'd')}@2x.png";
 
-            return Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 12.0),
-                      child: Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 2)],
+              return Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 12.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 2)],
+                              ),
+                              margin: const EdgeInsets.only(right: 8.0),
+                              child: buildNetworkImage(imagePath: iconUrl, width: 32, height: 32),
                             ),
-                            margin: const EdgeInsets.only(right: 8.0),
-                            child: buildNetworkImage(imagePath: iconUrl, width: 32, height: 32),
-                          ),
-                          Text(
-                            '${(controller.weatherInfo?['main']?['temp'] ?? '').toStringAsFixed(1)}°C',
-                            style: Get.textTheme.headlineMedium,
+                            Text(
+                              '${(controller.weatherInfo?['main']?['temp'] ?? '').toStringAsFixed(1)}°C',
+                              style: Get.textTheme.headlineMedium,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 12.0),
+                        child: Text(controller.weatherType?.recommendComment ?? '', style: Get.textTheme.bodyLarge),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          if (controller.weatherInfo?['date'] != null)
+                            Container(
+                              margin: const EdgeInsets.only(right: 8.0),
+                              child: Text(
+                                '기준 : ${DateFormat('a hh:mm:ss').format((controller.weatherInfo?['date'] as DateTime))}',
+                                style: Get.textTheme.bodyMedium,
+                              ),
+                            ),
+                          GestureDetector(
+                            onTap: controller.fetchWeather,
+                            child: Icon(Icons.refresh, color: AppColors.primary, size: 20),
                           ),
                         ],
                       ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 12.0),
-                      child: Text(controller.weatherType?.recommendComment ?? '', style: Get.textTheme.bodyLarge),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        if (controller.weatherInfo?['date'] != null)
-                          Container(
-                            margin: const EdgeInsets.only(right: 8.0),
-                            child: Text(
-                              '기준 : ${DateFormat('a hh:mm:ss').format((controller.weatherInfo?['date'] as DateTime))}',
-                              style: Get.textTheme.bodyMedium,
-                            ),
-                          ),
-                        GestureDetector(
-                          onTap: controller.fetchWeather,
-                          child: Icon(Icons.refresh, color: AppColors.primary, size: 20),
-                        ),
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }
-        },
+              );
+            }
+          },
+        ),
       ),
     );
   }
@@ -690,6 +707,29 @@ class _MainViewState extends State<MainView> {
           ),
         ),
       ),
+    );
+  }
+
+  /// @author 정준형
+  /// @since 2025. 6. 9.
+  /// @comment 배너형 광고
+  ///
+  Widget _buildBannerAdWidget() {
+    return GetBuilder<MainController>(
+      id: ':bannerAd',
+      builder: (context) {
+        if(!controller.isAdLoaded) {
+          return Container(margin: const EdgeInsets.only(bottom: 12.0),child: SpinKitFadingCircle(color: AppColors.primary, size: 50.0));
+        } else {
+          return Container(
+            margin: const EdgeInsets.only(bottom: 12.0),
+            width: controller.bannerAd.size.width.toDouble(),
+            height: controller.bannerAd.size.height.toDouble(),
+            child: AdWidget(ad: controller.bannerAd),
+          );
+        }
+
+      }
     );
   }
 }
