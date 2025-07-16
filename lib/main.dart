@@ -5,6 +5,8 @@ import 'package:datenote/routes/app_pages.dart';
 import 'package:datenote/services/kakao_local_service.dart';
 import 'package:datenote/services/open_ai_service.dart';
 import 'package:datenote/services/weather_service.dart';
+import 'package:datenote/util/fcm/fcm_service.dart';
+import 'package:datenote/util/link/deep_links.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -47,9 +49,12 @@ Future<void> main() async {
       await dotenv.load(fileName: ".env");
 
       /// firebase 초기화
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
+      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+      /// fcm 설정 초기화 및 콜백 등록
+      await foregroundFcmInitAndCallbackInit();
+
+      Get.put(DeepLinkController(), permanent: true);
 
       /// GetStorage 초기화
       await GetStorage.init();
@@ -65,6 +70,7 @@ Future<void> main() async {
 
       logger.e(error);
       stack.printInfo();
+
       /// firebase crashlytics 등 처리
     },
   );
@@ -82,6 +88,9 @@ class DateNoteApp extends StatelessWidget {
       fallbackLocale: const Locale('ko', 'KR'),
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,
+
+      unknownRoute: null,
+
       initialBinding: BindingsBuilder(() {
         Get.put(UserController(), permanent: true);
         Get.put(AuthController(), permanent: true);

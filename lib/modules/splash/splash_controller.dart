@@ -1,3 +1,4 @@
+import 'package:datenote/util/link/deep_links.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +18,8 @@ class SplashController extends GetxController {
     if (FirebaseAuth.instance.currentUser != null) {
       /// 유저 상태 초기화
       await Get.find<UserController>().loadUser();
+
+      Get.find<DeepLinkController>().markAppInitialized();
     } else {
       Get.offAllNamed(Routes.auth);
     }

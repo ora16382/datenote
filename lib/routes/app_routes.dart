@@ -3,6 +3,8 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
 
+  static const deepEntry = '/test';
+
   static const splash = '/splash';
 
   /// user 관련

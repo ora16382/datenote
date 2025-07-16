@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "639186366647-5s86vvi9bo3brmtan456svt1e93sqie7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "jh.project.datenote",
+            "certificate_hash": "ace9a04d5292e9c2a60c719389e957d1f925927e"
+          }
+        },
+        {
           "client_id": "639186366647-jp5t8cnmq4o862967g17e3jkv45so1sd.apps.googleusercontent.com",
           "client_type": 3
         }

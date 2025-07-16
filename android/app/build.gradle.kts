@@ -17,6 +17,8 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+
+        isCoreLibraryDesugaringEnabled = true // 이 줄 추가
     }
 
     kotlinOptions {
@@ -46,4 +48,10 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    // 중요: 여기에 coreLibraryDesugaring 의존성을 추가해야 합니다.
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5") // 이 줄을 이렇게 수정!
+
 }

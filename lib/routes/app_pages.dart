@@ -1,4 +1,5 @@
 
+import 'package:datenote/modules/home/deep_entry/deep_entry_view.dart';
 import 'package:datenote/modules/home/home_view.dart';
 import 'package:datenote/modules/main/dating_history/detail/dating_history_detail_view.dart';
 import 'package:datenote/modules/main/dating_history/edit/dating_history_edit_view.dart';
@@ -15,6 +16,7 @@ import 'package:datenote/modules/user/address/search/address_search_view.dart';
 import 'package:datenote/modules/user/auth/auth_view.dart';
 import 'package:datenote/modules/user/collecting_infomation/collecting_information_view.dart';
 import 'package:datenote/modules/user/profile/profile_setting_view.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 part 'app_routes.dart';
@@ -25,7 +27,13 @@ class AppPages {
   static const initial = Routes.splash;
 
   static final routes = [
+    /// 스플래시
     GetPage(name: Routes.splash, page: () => const SplashView()),
+
+    GetPage(
+      name: Routes.deepEntry,
+      page: () => const DeepEntryView(),
+    ),
 
     /// 로그인 관련
     GetPage(name: Routes.auth, page: () => const AuthView()),
