@@ -93,8 +93,7 @@ dependencies:
   # bottom navi bar
   convex_bottom_bar: ^3.2.0
 
-  # native splash
-  flutter_native_splash: ^2.4.6
+
 
   # 패키지 정보
   package_info_plus: ^8.3.0
@@ -146,6 +145,8 @@ dependencies:
   app_links: ^6.4.0
   firebase_messaging: ^15.2.9
   flutter_local_notifications: ^19.3.0
+  pedometer: ^4.1.1
+
 
 dev_dependencies:
   flutter_test:
@@ -163,6 +164,9 @@ dev_dependencies:
   json_serializable: ^6.9.4
 
   flutter_flavorizr: ^2.4.1
+  flutter_launcher_icons: ^0.14.4
+  # native splash
+  flutter_native_splash: ^2.4.6
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 dependency_overrides:
@@ -216,34 +220,107 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
 
-flutter_native_splash:
-  color: "#ec6853"
-  image: assets/images/splash_image.png
-  fullscreen: true
-
-  android_12:
-    color: "#ec6853"
-
-  color_ios: "#ec6853"
-  color_dark_ios : "#ec6853"
+#flutter_native_splash:
+#  color: "#ec6853"
+#  image: assets/images/splash_image.png
+#  fullscreen: true
+#
+#  android_12:
+#    color: "#ec6853"
+#
+#  color_ios: "#ec6853"
+#  color_dark_ios : "#ec6853"
+# --- flutter_native_splash 설정 (main/default splash는 필요 없음, 파일별로 관리) ---
+# 이 블록은 직접적인 설정 대신 flutter_native_splash-dev.yaml, flutter_native_splash-prod.yaml 파일에서 관리됩니다.
+# 이 섹션이 pubspec.yaml에 있으면 --all-flavors와 충돌할 수 있으므로, 단일 splash는 제거하는 것이 좋습니다.
 
 flavorizr:
+  # 여기에 필요한 모든 프로세서를 포함해야 합니다.
+  instructions:
+    - assets:download      # 에셋 다운로드 (필요한 경우)
+    - assets:extract       # 에셋 압축 해제 (필요한 경우)
+
+    # Android 관련 프로세서
+    - android:androidManifest
+    - android:flavorizrGradle
+    - android:buildGradle
+    - android:dummyAssets  # 더미 에셋 (필요시)
+    - android:icons        # <-- 앱 아이콘 (추가)
+
+    # Flutter 관련 프로세서
+    - flutter:flavors
+    - flutter:app
+    - flutter:pages
+    #- flutter:main
+
+    # iOS 관련 프로세서
+    - ios:podfile
+    - ios:xcconfig
+    - ios:buildTargets
+    - ios:schema
+    - ios:dummyAssets      # 더미 에셋 (필요시)
+    - ios:icons            # <-- 앱 아이콘 (추가)
+    - ios:plist            # Info.plist 파일 수정 (REVERSED_CLIENT_ID 등)
+    - ios:launchScreen     # 런치 스크린 (필요시)
+
+    # Firebase 및 Huawei 관련 프로세서 (설정했다면)
+    - google:firebase
+    - huawei:agconnect
+
+    - assets:clean         # 에셋 정리
+    - ide:config           # IDE 설정 파일 수정
+
+  app:
+    android:
+      flavorDimensions: "flavor-type2"
+      resValues:
+        app_mode_name:
+          type: "string"
+          value: "정준형3"
+        app_mode_name2:
+          type: "string"
+          value: "정준형4"
+
   flavors:
     dev: # 개발 환경을 위한 플레이버
       app:
         name: "DateNote (개발)" # 개발 앱 이름
+
       android:
         applicationId: "jh.project.datenote.dev" # 안드로이드 개발 앱 ID
         firebase:
           config: ".firebase/dev/google-services.json" # 개발용 Firebase 설정 파일 경로
+            # --- 여기에 테스트할 내용 추가 ---
+        resValues:
+          app_mode_name:
+            type: "string"
+            value: "개발모드"
+          is_feature_enabled:
+            type: "bool"
+            value: "true"
+#        buildConfigFields:
+#          API_ENDPOINT:
+#            type: "String"
+#            value: "\"https://api.dev.datenote.com\"" # 문자열 값은 반드시 \" \" 로 감싸야 합니다.
+#          ANALYTICS_ID:
+#            type: "int"
+#            value: "12345"
+#        customConfig:
+          # versionNameSuffix는 Android 빌드 시스템의 표준 속성입니다.
+#          versionNameSuffixd: "\"-dev\""
+          # minSdkDev: 21 # customConfig로 Gradle에 새로운 변수를 주입하는 예시
       ios:
         bundleId: "jh.project.datenote.dev" # iOS 개발 앱 번들 ID
         firebase:
           config: ".firebase/dev/GoogleService-Info.plist" # 개발용 Firebase 설정 파일 경로
+        variables: # 여기에 REVERSED_CLIENT_ID 변수 정의
+          REVERSED_CLIENT_ID:
+            value: "com.googleusercontent.apps.639186366647-q5cnn1nabm1kdha2r7jctnf9crt9nl6s"# 변수 이름은 자유롭게 지정 가능 (예: MY_DEV_REVERSED_CLIENT_ID)
 
     prod: # 운영 환경을 위한 플레이버
       app:
         name: "DateNote" # 운영 앱 이름
+
       android:
         applicationId: "jh.project.datenote" # 안드로이드 운영 앱 ID
         firebase:
@@ -252,3 +329,6 @@ flavorizr:
         bundleId: "jh.project.datenote" # iOS 운영 앱 번들 ID
         firebase:
           config: ".firebase/prod/GoogleService-Info.plist" # 운영용 Firebase 설정 파일 경로
+        variables: # 여기에 REVERSED_CLIENT_ID 변수 정의
+          REVERSED_CLIENT_ID:
+            value: "com.googleusercontent.apps.639186366647-59gn7rjlt796prki3vs4e5duv3b5utoo"# 변수 이름은 자유롭게 지정 가능 (예: MY_DEV_REVERSED_CLIENT_ID)

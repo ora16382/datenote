@@ -7,8 +7,10 @@ import 'package:datenote/services/open_ai_service.dart';
 import 'package:datenote/services/weather_service.dart';
 import 'package:datenote/util/fcm/fcm_service.dart';
 import 'package:datenote/util/link/deep_links.dart';
+import 'package:datenote/util/pedometer/pedometer_test.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
@@ -19,6 +21,7 @@ import 'package:logger/logger.dart';
 
 import 'constant/theme/app_theme.dart';
 import 'firebase_options.dart';
+import 'flavors.dart';
 import 'modules/user/user_controller.dart';
 
 Logger logger = Logger();
@@ -59,6 +62,14 @@ Future<void> main() async {
       /// GetStorage 초기화
       await GetStorage.init();
 
+      // F.appFlavor = Flavor.values.firstWhere(
+      //
+      //       (element) => element.name == appFlavor,
+      //
+      // );
+
+      logger.d(appFlavor);
+      pedometerTest();
       runApp(const DateNoteApp());
     },
     (error, stack) async {
@@ -99,6 +110,7 @@ class DateNoteApp extends StatelessWidget {
         Get.put(OpenAiService(), permanent: true);
         Get.put(KakaoLocalService(), permanent: true);
         Get.put(WeatherService(), permanent: true);
+
       }),
       theme: themeData,
       localizationsDelegates: const [

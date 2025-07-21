@@ -1,23 +1,59 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:datenote/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../main.dart';
+import '../pedometer/pedometer_test.dart';
 
 /// 백그라운드 메시지 수신 콜백
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  /// 위젯 바인딩
+  WidgetsFlutterBinding.ensureInitialized();
+  DartPluginRegistrant.ensureInitialized();
+
   print("background 수신");
+
   if (Firebase.apps.isEmpty) {
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   }
+
+  pedometerTest();
+
+  NotificationDetails notificationDetails = const NotificationDetails(
+      android: AndroidNotificationDetails(
+        "high_importance_channel",
+        "high_importance_notification",
+      ),
+      iOS: DarwinNotificationDetails());
+
+  RemoteNotification? notification = message.notification;
+
+  /// TODO 데이터 검사해보자.
+  AndroidNotification? android = message.notification?.android;
+
+  /// TODO 데이터 검사해보자.
+  AppleNotification? apple = message.notification?.apple;
+
+  /// TODO 기존 IOS 에서도 foreground 에서 표시가 됐던 이유는 단지 android 가 null이 아니여서 그랬던것 뿐
+  /// IOS 에서도 foreground 에서 표시되게 하려면 apple 이 null 이 아닐때 표시하도록 수정해야함
+
+    FlutterLocalNotificationsPlugin().show(
+      1234124124,
+      message.data['name'],
+      message.data['mass'],
+      notificationDetails,
+      payload: json.encode(message.data),
+    );
 
   /// TODO 걸음수 가져오는지 확인
   Map<String, dynamic> data = message.data;
@@ -55,7 +91,7 @@ Future<void> foregroundFcmInitAndCallbackInit() async {
 
   /// 포그라운드 기본 알림 설정
   const InitializationSettings initializationSettings =
-  InitializationSettings(android: AndroidInitializationSettings('@mipmap/ic_launcher'), iOS: DarwinInitializationSettings(), macOS: DarwinInitializationSettings());
+  InitializationSettings(android: AndroidInitializationSettings('@mipmap/launcher_icon'), iOS: DarwinInitializationSettings(), macOS: DarwinInitializationSettings());
 
   /// IOS 포그라운드 알림 설정
   await firebaseMessaging.setForegroundNotificationPresentationOptions(

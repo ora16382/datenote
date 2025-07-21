@@ -1,0 +1,7 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
+#include "Generated.xcconfig"
+
+ASSET_PREFIX=prod
+BUNDLE_NAME=DateNote
+BUNDLE_DISPLAY_NAME=DateNote
+REVERSED_CLIENT_ID=com.googleusercontent.apps.639186366647-59gn7rjlt796prki3vs4e5duv3b5utoo

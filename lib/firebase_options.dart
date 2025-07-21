@@ -63,6 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '639186366647',
     projectId: 'datenote-29253',
     storageBucket: 'datenote-29253.firebasestorage.app',
+    androidClientId: '639186366647-5s86vvi9bo3brmtan456svt1e93sqie7.apps.googleusercontent.com',
     iosClientId: '639186366647-59gn7rjlt796prki3vs4e5duv3b5utoo.apps.googleusercontent.com',
     iosBundleId: 'jh.project.datenote',
   );
